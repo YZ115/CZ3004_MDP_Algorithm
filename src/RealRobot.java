@@ -6,8 +6,10 @@ public class RealRobot extends RobotInterface {
 	RealSensor[] Sen;
 	//	ArrayList<Node> TraverseNodes = new ArrayList();
 	PacketFactory pf = null;
-	boolean hitWallFront=false;
-	boolean hitWallRight=false;
+	static SocketClient sc = null;
+	int directionNum = -1;
+/*	boolean hitWallFront=false;
+	boolean hitWallRight=false;*/
 	boolean stepByStep = true;
 	boolean fastestcalibrate = false; //needs to calibrate for fastest
 	int count = 0;
@@ -106,6 +108,23 @@ public class RealRobot extends RobotInterface {
 						sendMapDescriptor();	
 			//			}
 			pf.createOneMovementPacketToArduino(Packet.FORWARDi);
+			switch(facing){
+				case UP:
+					directionNum = 0;
+					break;
+				case RIGHT:
+					directionNum = 1;
+					break;
+				case DOWN:
+					directionNum = 2;
+					break;
+				case LEFT:
+					directionNum = 3;
+					break;
+				default:
+					break;
+			}
+			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
 			updateSensor();
 
@@ -134,6 +153,24 @@ public class RealRobot extends RobotInterface {
 
 
 			pf.createOneMovementPacketToArduino(Packet.REVERSEi);
+
+			switch(facing){
+				case UP:
+					directionNum = 0;
+					break;
+				case RIGHT:
+					directionNum = 1;
+					break;
+				case DOWN:
+					directionNum = 2;
+					break;
+				case LEFT:
+					directionNum = 3;
+					break;
+				default:
+					break;
+			}
+			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
 			updateSensor();
 
@@ -233,6 +270,23 @@ public class RealRobot extends RobotInterface {
 		}
 		if(stepByStep) {
 			pf.createOneMovementPacketToArduino(Packet.TURNRIGHTi);
+			switch(facing){
+				case UP:
+					directionNum = 0;
+					break;
+				case RIGHT:
+					directionNum = 1;
+					break;
+				case DOWN:
+					directionNum = 2;
+					break;
+				case LEFT:
+					directionNum = 3;
+					break;
+				default:
+					break;
+			}
+			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update location for the robot in the sensors
 			updateSensor();
 
@@ -270,7 +324,23 @@ public class RealRobot extends RobotInterface {
 		if(stepByStep) {
 
 			pf.createOneMovementPacketToArduino(Packet.TURNLEFTi);
-
+			switch(facing){
+				case UP:
+					directionNum = 0;
+					break;
+				case RIGHT:
+					directionNum = 1;
+					break;
+				case DOWN:
+					directionNum = 2;
+					break;
+				case LEFT:
+					directionNum = 3;
+					break;
+				default:
+					break;
+			}
+			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
 			updateSensor();
 			//make sensors "sense" the surrounding

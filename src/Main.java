@@ -57,7 +57,7 @@ public class Main {
 		Map map = new Map();
 		
 		//////////////////////IMPORTANT VARIABLE///////////////////////////////////////////////////////////////////////
-		boolean simulator = true;
+		boolean simulator = false;
 		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////
 		
 		if(simulator) {
@@ -107,7 +107,7 @@ public class Main {
 			Sensor s3 = new Sensor(3,SensorLocation.FACING_DOWN, 1, 0, theRobot.x, theRobot.y);
 			Sensor s4 = new Sensor(3,SensorLocation.FACING_RIGHT, 1, -1, theRobot.x, theRobot.y);
 			Sensor s5 = new Sensor(3,SensorLocation.FACING_DOWN, -1, 0, theRobot.x, theRobot.y);
-			Sensor s6 = new Sensor(6,SensorLocation.FACING_TOP, 0, 0, theRobot.x, theRobot.y);
+			Sensor s6 = new Sensor(6,SensorLocation.FACING_TOP, 1, -1, theRobot.x, theRobot.y);
 
 
 			Sensor[] Sensors = {s1,s2,s3,s4,s5,s6};
@@ -141,7 +141,7 @@ public class Main {
 			RealSensor s3 = new RealSensor(4,SensorLocation.FACING_DOWN, 1, 1, theRobot.x, theRobot.y);
 			RealSensor s4 = new RealSensor(4,SensorLocation.FACING_RIGHT, 1, -1, theRobot.x, theRobot.y);
 			RealSensor s5 = new RealSensor(4,SensorLocation.FACING_DOWN, -1, 1, theRobot.x, theRobot.y);
-			RealSensor s6 = new RealSensor(5,SensorLocation.FACING_TOP, 0, -1, theRobot.x, theRobot.y);
+			RealSensor s6 = new RealSensor(5,SensorLocation.FACING_TOP, 1, -1, theRobot.x, theRobot.y);
 
 			RealSensor[] Sensors = {s1,s2,s3,s4,s5,s6};
 			theRobot.addSensors(Sensors);
@@ -240,6 +240,7 @@ public class Main {
 					pf.listen();
 					if(recvPackets.isEmpty())
 						continue;
+					System.out.println("recvPackets is not empty");
 					Packet  pkt = recvPackets.remove();
 					System.out.println(pkt.getType());
 					if(pkt.getType() == Packet.SetWayPointi) {
@@ -249,9 +250,11 @@ public class Main {
 						System.out.println("setting waypoint position at :" + wayx+ ", " + wayy);
 						waypoint = new Node(wayx, wayy);
 						map.setWaypointClear(wayx, wayy);
+						currentState = State.WAITINGFORCOMMAND;
 					}
 					else if(pkt.getType() == Packet.setRobotPosition) {
 						//set robot robot position
+						System.out.println("-----------------Setting robot position--------------");
 						theRobot.setRobotPos(pkt.getX(), pkt.getY(), pkt.getDirection());
 					}
 					else if(pkt.getType() == Packet.StartExploration) {
@@ -267,7 +270,7 @@ public class Main {
 					}
 					else if(pkt.getType() == Packet.ResetInstruction) {
 						currentState = State.RESETFASTESTPATHHOME;
-						System.out.println("Reseting Map...");
+						System.out.println("Resetting Map...");
 						map.resetMap();
 						theRobot.setface(Direction.RIGHT);
 						theRobot.x = 1;
@@ -277,6 +280,10 @@ public class Main {
 					}
 					else if (pkt.getType() == Packet.GETMAPi)
 						theRobot.sendMapDescriptor();
+					else {
+						System.out.println("Invalid Packet!!");
+						continue;
+					}
 					break;
 				}
 			case EXPLORATION:

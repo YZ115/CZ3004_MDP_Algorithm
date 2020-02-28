@@ -1,3 +1,5 @@
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,15 +89,20 @@ public class PacketFactory implements Runnable{
 
 	public void processPacket(String packetString) {
 		String[] splitPacket = packetString.split(Packet.Splitter);
-		if (splitPacket[0].equalsIgnoreCase(Packet.Cmd))
+/*		if (splitPacket[0].equalsIgnoreCase(Packet.Cmd))
 		{
+			if(splitPacket[1].equalsIgnoreCase(Packet.PhotoPacket)){
+				//send command to rpi to take photo
+				System.out.println("Sending take photo command and x, y");
+				buffer.add(new Packet(Packet.takePhoto));
+			}*/
 			if(splitPacket[1].equalsIgnoreCase(Packet.StartExplorationType)) {
 				//start exploration
 				//when exploration end and reach the start position
 				//send ok:exploration to android
 				System.out.println("starting exploration...");
 				buffer.add(new Packet(Packet.StartExploration));
-				System.out.print("*******************************************Exploration ended*********************************************\n");
+				System.out.print("*******************************************received packet for Exploration*********************************************\n");
 				sc.sendPacket(Packet.StartExplorationTypeOk + "$");
 				sc.sendPacket(Packet.StartExplorationTypeOkARD + "$");
 
@@ -107,7 +114,7 @@ public class PacketFactory implements Runnable{
 				//start fastest path. just send the whole stack of instruction at once
 				//need to get the x,y value of the waypoint
 				//send to android that it is ready to move.
-				System.out.println("*****************************************recieved packet for fastest path**************************************\n");
+				System.out.println("*****************************************received packet for fastest path**************************************\n");
 
 				buffer.add(new Packet(Packet.StartFastestPath));
 
@@ -153,6 +160,7 @@ public class PacketFactory implements Runnable{
 				//allow faster execution when android sends the command to start fastest path.
 				//must edit set robot position.
 				buffer.add(new Packet(Packet.SetWayPointi, x, y));
+				sc.sendPacket("A:"+Packet.SetWayPointOK);
 			}
 		}
 		else {

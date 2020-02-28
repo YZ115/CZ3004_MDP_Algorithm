@@ -16,6 +16,7 @@ public class Packet{
 	final static int SetWayPointi = 5;
 	final static int setRobotPosition = 6;
 	final static int setObstacle = 7;
+	final static int takePhoto = 8;
 	
 	
 	//instruction to map to packet Instruction.
@@ -51,6 +52,10 @@ public class Packet{
 	final static String StartFastestPathTypeOk = "start_path"; //send to android
 	final static String StartFastestPathTypeFin = "finish_path"; //send to android
 	final static String startExplore = ANDROID + Splitter + Ok + Splitter + StartExplorationTypeOk;
+
+	//Send take photo command to rpi
+	final static String PhotoPacket = "cam"; //sends the command to take pictures along with x,y co-ordinates and direction
+/*	final static String sendPhotoCmd = RPI + Splitter + Ok + PhotoPacket + photoData*/
 
 	
 	//stop the robot from android
