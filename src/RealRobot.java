@@ -6,7 +6,7 @@ public class RealRobot extends RobotInterface {
 	RealSensor[] Sen;
 	//	ArrayList<Node> TraverseNodes = new ArrayList();
 	PacketFactory pf = null;
-	static SocketClient sc = null;
+	//static SocketClient sc = null;
 	int directionNum = -1;
 /*	boolean hitWallFront=false;
 	boolean hitWallRight=false;*/
@@ -108,6 +108,7 @@ public class RealRobot extends RobotInterface {
 						sendMapDescriptor();	
 			//			}
 			pf.createOneMovementPacketToArduino(Packet.FORWARDi);
+			System.out.println(facing);
 			switch(facing){
 				case UP:
 					directionNum = 0;
@@ -124,7 +125,9 @@ public class RealRobot extends RobotInterface {
 				default:
 					break;
 			}
-			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
+			pf.sendPhotoDataToRpi(x,y,directionNum);
+			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
+			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
 			updateSensor();
 
@@ -153,7 +156,7 @@ public class RealRobot extends RobotInterface {
 
 
 			pf.createOneMovementPacketToArduino(Packet.REVERSEi);
-
+			System.out.println(facing);
 			switch(facing){
 				case UP:
 					directionNum = 0;
@@ -170,7 +173,9 @@ public class RealRobot extends RobotInterface {
 				default:
 					break;
 			}
-			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
+			pf.sendPhotoDataToRpi(x,y,directionNum);
+			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
+			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
 			updateSensor();
 
@@ -270,6 +275,7 @@ public class RealRobot extends RobotInterface {
 		}
 		if(stepByStep) {
 			pf.createOneMovementPacketToArduino(Packet.TURNRIGHTi);
+			System.out.println(facing);
 			switch(facing){
 				case UP:
 					directionNum = 0;
@@ -286,7 +292,9 @@ public class RealRobot extends RobotInterface {
 				default:
 					break;
 			}
-			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
+			pf.sendPhotoDataToRpi(x,y,directionNum);
+			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
+			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update location for the robot in the sensors
 			updateSensor();
 
@@ -324,6 +332,7 @@ public class RealRobot extends RobotInterface {
 		if(stepByStep) {
 
 			pf.createOneMovementPacketToArduino(Packet.TURNLEFTi);
+			System.out.println(facing);
 			switch(facing){
 				case UP:
 					directionNum = 0;
@@ -340,7 +349,10 @@ public class RealRobot extends RobotInterface {
 				default:
 					break;
 			}
-			sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
+			pf.sendPhotoDataToRpi(x,y,directionNum);
+			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
+			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
+			System.out.println("\"R:\"+\"cam:\"+x+\":\"+y+\":\"+directionNum");
 			//update the location for the robot in the sensors
 			updateSensor();
 			//make sensors "sense" the surrounding

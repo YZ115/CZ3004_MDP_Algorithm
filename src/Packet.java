@@ -25,6 +25,7 @@ public class Packet{
 	final static int TURNLEFTi = 3;
 	final static int REVERSEi = 4;
 	public static final int CALIBRATEi = 5;
+	final static int PHOTOi = 6;
 
 
 	

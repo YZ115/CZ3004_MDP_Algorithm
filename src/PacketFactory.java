@@ -39,6 +39,7 @@ public class PacketFactory implements Runnable{
 	final static int TURNLEFTi = 3;
 	final static int REVERSEi = 4;	
 	public static final int CALIBRATEi = 5;
+	final static int PHOTOi = 6;
 	boolean explorationflag = false;
 	final static byte UPDATESENSOR = 0x1;
 	public PacketFactory() {
@@ -137,7 +138,7 @@ public class PacketFactory implements Runnable{
 				buffer.add(new Packet(Packet.GETMAPi));
 			}
 
-		}else if(splitPacket[0].equals(Packet.Set)) {
+		else if(splitPacket[0].equals(Packet.Set)) {
 			if(splitPacket[1].equalsIgnoreCase(Packet.SetRobotPos)) {
 				//remove bracket, split by comma , set first as x second as y
 				//set robot direction and x and y
@@ -168,6 +169,7 @@ public class PacketFactory implements Runnable{
 		}
 
 	}
+
 
 	public void recvSensorOrStop(String packetString) {
 		System.out.println("*************************************recvSensorOrStop called*********************************************\n");
@@ -382,6 +384,9 @@ public class PacketFactory implements Runnable{
 
 			System.out.println("Sending a Reverse Packet");
 		}
+/*		else if (instruction == PHOTOi){
+			instructionString = Packet.REVERSECMD + Packet.Splitter + "1"+ "$";
+		}*/
 		else {
 			System.out.println("Error: Wrong format");
 			return false;
@@ -398,6 +403,11 @@ public class PacketFactory implements Runnable{
 		sc.sendPacket(cmd);
 	}
 
+	public boolean sendPhotoDataToRpi (int x, int y, int directionNum){
+		String instructionString = Packet.RPI+Packet.Splitter+Packet.PhotoPacket+Packet.Splitter+x+Packet.Splitter+y+Packet.Splitter+directionNum;
+		sc.sendPacket(instructionString);
+		return true;
+	}
 
 	public void waitForAck() {
 		System.out.println("+++++++++++++++++++++++++++++++++++++++Waiting for Acknowledgement++++++++++++++++++++++++++++++++++++++++++\n");
