@@ -13,7 +13,7 @@ import javax.swing.text.Position;
 public class PacketFactory implements Runnable{
 	
 	static SocketClient sc = null;
-
+	int delay = 0;
 	int waypoint_x = 0, waypoint_y = 0;
 	//multi-threading this
 	//have a reference to a queue of strings or commands or something.
@@ -241,6 +241,13 @@ public class PacketFactory implements Runnable{
 		//we need a return packet after calibration?
 		System.out.println("debug side calibrate");
 		sc.sendPacket(Packet.SIDECALIBRATE);
+/*		try {
+			Thread.sleep((int) (delay));
+		}catch (Exception e){
+			System.out.println("You ran into an error you idiot. Get a life.");
+		}
+		sendPhotoDataToRpi();*/
+//		sendPhotoDataToRpi();
 		setPreviousPacket(Packet.SIDECALIBRATE);
 	}
 
@@ -404,7 +411,7 @@ public class PacketFactory implements Runnable{
 	}
 
 	public boolean sendPhotoDataToRpi (int x, int y, int directionNum){
-		String instructionString = Packet.RPI+Packet.Splitter+Packet.PhotoPacket+Packet.Splitter+x+Packet.Splitter+y+Packet.Splitter+directionNum;
+		String instructionString = Packet.RPI+Packet.Splitter+Packet.PhotoPacket+Packet.Splitter+x+Packet.Splitter+y+Packet.Splitter+directionNum+"$";
 		sc.sendPacket(instructionString);
 		return true;
 	}

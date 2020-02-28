@@ -8,6 +8,8 @@ public class RealRobot extends RobotInterface {
 	PacketFactory pf = null;
 	//static SocketClient sc = null;
 	int directionNum = -1;
+	int delay = 150;
+	int scdelay = 0;
 /*	boolean hitWallFront=false;
 	boolean hitWallRight=false;*/
 	boolean stepByStep = true;
@@ -107,7 +109,7 @@ public class RealRobot extends RobotInterface {
 			//			if(count % 4 == 0) {
 						sendMapDescriptor();	
 			//			}
-			pf.createOneMovementPacketToArduino(Packet.FORWARDi);
+			//pf.createOneMovementPacketToArduino(Packet.FORWARDi);
 			System.out.println(facing);
 			switch(facing){
 				case UP:
@@ -127,6 +129,12 @@ public class RealRobot extends RobotInterface {
 			}
 			pf.sendPhotoDataToRpi(x,y,directionNum);
 			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
+/*			try {
+				Thread.sleep((int) (delay));
+			}catch (Exception e){
+				System.out.println("You ran into an error you idiot. Get a life.");
+			}*/
+			pf.createOneMovementPacketToArduino(Packet.FORWARDi);
 			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
 			updateSensor();
@@ -155,7 +163,7 @@ public class RealRobot extends RobotInterface {
 		if(stepByStep) {
 
 
-			pf.createOneMovementPacketToArduino(Packet.REVERSEi);
+			//pf.createOneMovementPacketToArduino(Packet.REVERSEi);
 			System.out.println(facing);
 			switch(facing){
 				case UP:
@@ -175,6 +183,12 @@ public class RealRobot extends RobotInterface {
 			}
 			pf.sendPhotoDataToRpi(x,y,directionNum);
 			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
+/*			try {
+				Thread.sleep((int) (delay));
+			}catch (Exception e){
+				System.out.println("You ran into an error you idiot. Get a life.");
+			}*/
+			pf.createOneMovementPacketToArduino(Packet.REVERSEi);
 			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
 			updateSensor();
@@ -274,7 +288,7 @@ public class RealRobot extends RobotInterface {
 			Sen[i].ChangeDirectionRight();
 		}
 		if(stepByStep) {
-			pf.createOneMovementPacketToArduino(Packet.TURNRIGHTi);
+			//pf.createOneMovementPacketToArduino(Packet.TURNRIGHTi);
 			System.out.println(facing);
 			switch(facing){
 				case UP:
@@ -292,8 +306,19 @@ public class RealRobot extends RobotInterface {
 				default:
 					break;
 			}
+			try {
+				Thread.sleep((int) (delay));
+			}catch (Exception e){
+				System.out.println("You ran into an error you idiot. Get a life.");
+			}
 			pf.sendPhotoDataToRpi(x,y,directionNum);
 			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
+			try {
+				Thread.sleep((int) (delay));
+			}catch (Exception e){
+				System.out.println("You ran into an error you idiot. Get a life.");
+			}
+			pf.createOneMovementPacketToArduino(Packet.TURNRIGHTi);
 			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update location for the robot in the sensors
 			updateSensor();
@@ -331,7 +356,7 @@ public class RealRobot extends RobotInterface {
 		}
 		if(stepByStep) {
 
-			pf.createOneMovementPacketToArduino(Packet.TURNLEFTi);
+		//	pf.createOneMovementPacketToArduino(Packet.TURNLEFTi);
 			System.out.println(facing);
 			switch(facing){
 				case UP:
@@ -349,10 +374,21 @@ public class RealRobot extends RobotInterface {
 				default:
 					break;
 			}
+			try {
+				Thread.sleep((int) (delay));
+			}catch (Exception e){
+				System.out.println("You ran into an error you idiot. Get a life.");
+			}
 			pf.sendPhotoDataToRpi(x,y,directionNum);
 			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
 			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			System.out.println("\"R:\"+\"cam:\"+x+\":\"+y+\":\"+directionNum");
+			try {
+				Thread.sleep((int) (delay));
+			}catch (Exception e){
+				System.out.println("You ran into an error you idiot. Get a life.");
+			}
+			pf.createOneMovementPacketToArduino(Packet.TURNLEFTi);
 			//update the location for the robot in the sensors
 			updateSensor();
 			//make sensors "sense" the surrounding
@@ -586,7 +622,13 @@ public class RealRobot extends RobotInterface {
 
 	@Override
 	public void side_Calibrate() {
-		pf.sideCalibrate();			
+		pf.sideCalibrate();
+		try {
+			Thread.sleep((int) (scdelay));
+		}catch (Exception e){
+			System.out.println("You ran into an error you idiot. Get a life.");
+		}
+		pf.sendPhotoDataToRpi(x,y,(directionNum+1)%4);
 		LookAtSurroundings();
 	}
 
