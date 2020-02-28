@@ -79,6 +79,7 @@ public class PacketFactory implements Runnable{
 			System.out.println("receiving Data : " + data);
 			String removeDataString = data.replace("P:", "");
 			if(explorationflag == false)
+				// TODO: RESET COMES TO HERE DURING EXPLORATION 2 @JARRETT
 				processPacket(removeDataString);
 			else
 				recvSensorOrStop(removeDataString);
@@ -130,6 +131,7 @@ public class PacketFactory implements Runnable{
 			else if(splitPacket[1].equalsIgnoreCase(Packet.Reset)) {
 				//carry robot back to starting point.
 				//reset map
+				// TODO: RESET COMES TO HERE DURING EXPLORATION 1 @JARRETT
 				buffer.add(new Packet(Packet.ResetInstruction));
 				sc.sendPacket(Packet.ResetOK);
 				System.out.println("sending ok reset");
@@ -237,10 +239,10 @@ public class PacketFactory implements Runnable{
 	}
 
 	
-	public void sideCalibrate() {
+	public void sideCalibrate(int x, int y, int directionNum) {
 		//we need a return packet after calibration?
 		System.out.println("debug side calibrate");
-		sc.sendPacket(Packet.SIDECALIBRATE);
+		sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 /*		try {
 			Thread.sleep((int) (delay));
 		}catch (Exception e){
@@ -251,9 +253,9 @@ public class PacketFactory implements Runnable{
 		setPreviousPacket(Packet.SIDECALIBRATE);
 	}
 
-	public void frontCalibrate() {
+	public void frontCalibrate(int x, int y, int directionNum) {
 		System.out.println("debug front calibrate");
-		sc.sendPacket(Packet.FRONTCALIBRATE);
+		sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 		setPreviousPacket(Packet.FRONTCALIBRATE);
 	}
 	
@@ -328,7 +330,7 @@ public class PacketFactory implements Runnable{
 		}
 		sideTurnCalibrate();
 		return true;
-		
+
 		//either send here or return string...(unsure)
 	}
 	
@@ -364,30 +366,30 @@ public class PacketFactory implements Runnable{
 		//send array to android. 
 	}
 	
-	public boolean createOneMovementPacketToArduino(int instruction) {
+	public boolean createOneMovementPacketToArduino(int instruction, int x, int y, int directionNum) {
 		//for one by one exploration
 		//create one Packet for one movement
 		//send to both android and arduino
 		String instructionString = null;
 		String instructionString2 = null;
 		if(instruction == FORWARDi) {
-			instructionString = Packet.FORWARDCMD + Packet.Splitter + "1"+ "$";
-			instructionString2 = Packet.FORWARDCMDANDROID + Packet.Splitter + "1" + "$";
+			instructionString = Packet.FORWARDCMD;
+			instructionString2 = Packet.FORWARDCMDANDROID;
 			System.out.println("Sending a Forward Packet");
 		}
 		else if(instruction == TURNRIGHTi) {
-			instructionString = Packet.TURNRIGHTCMD + Packet.Splitter + "1"+ "$";
-			instructionString2 = Packet.TURNRIGHTCMDANDROID + Packet.Splitter + "1" + "$";
+			instructionString = Packet.TURNRIGHTCMD;
+			instructionString2 = Packet.TURNRIGHTCMDANDROID;
 			System.out.println("Sending a Turn right Packet");
 		}
 		else if(instruction == TURNLEFTi) {
-			instructionString = Packet.TURNLEFTCMD+ Packet.Splitter + "1"+ "$";
-			instructionString2 = Packet.TURNLEFTCMDANDROID + Packet.Splitter + "1" + "$";
+			instructionString = Packet.TURNLEFTCMD;
+			instructionString2 = Packet.TURNLEFTCMDANDROID;
 			System.out.println("Sending a Turn Left Packet");
 		}
 		else if(instruction == REVERSEi) {
-			instructionString = Packet.REVERSECMD + Packet.Splitter + "1"+ "$";
-			instructionString2 = Packet.REVERSECMDANDROID + Packet.Splitter + "1" + "$";
+			instructionString = Packet.REVERSECMD;
+			instructionString2 = Packet.REVERSECMDANDROID;
 
 			System.out.println("Sending a Reverse Packet");
 		}
@@ -398,7 +400,10 @@ public class PacketFactory implements Runnable{
 			System.out.println("Error: Wrong format");
 			return false;
 		}
-		
+
+		instructionString = instructionString + Packet.Splitter + "1" + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$";
+		instructionString2 = instructionString2 + Packet.Splitter + "1" + "$";
+
 		sc.sendPacket(instructionString);
 		sc.sendPacket(instructionString2);
 		setPreviousPacket(instructionString);
@@ -410,11 +415,11 @@ public class PacketFactory implements Runnable{
 		sc.sendPacket(cmd);
 	}
 
-	public boolean sendPhotoDataToRpi (int x, int y, int directionNum){
-		String instructionString = Packet.RPI+Packet.Splitter+Packet.PhotoPacket+Packet.Splitter+x+Packet.Splitter+y+Packet.Splitter+directionNum+"$";
-		sc.sendPacket(instructionString);
-		return true;
-	}
+//	public boolean sendPhotoDataToRpi (int x, int y, int directionNum){
+//		String instructionString = Packet.RPI+Packet.Splitter+Packet.PhotoPacket+Packet.Splitter+x+Packet.Splitter+y+Packet.Splitter+directionNum+"$";
+//		sc.sendPacket(instructionString);
+//		return true;
+//	}
 
 	public void waitForAck() {
 		System.out.println("+++++++++++++++++++++++++++++++++++++++Waiting for Acknowledgement++++++++++++++++++++++++++++++++++++++++++\n");
@@ -426,8 +431,6 @@ public class PacketFactory implements Runnable{
 		// TODO Auto-generated method stub
 		
 	}
-
-
 
 
 

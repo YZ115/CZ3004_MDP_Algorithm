@@ -293,7 +293,7 @@ public class Main {
 				if(simulator)
 				{
 					//will return true once the exploration is done(when the robot reaches the starting point again)
-					if(exe.DoSimulatorExploration())
+					if(exe.DoSimulatorExploration() == 1)
 					{
 						Scanner sc = new Scanner(System.in);
 						theRobot.deactivateSensors();
@@ -313,7 +313,8 @@ public class Main {
 					theRobot.LookAtSurroundings();
 					//pf.sc.sendPacket(Packet.INITIALCALIBRATE);
 					//will return true once the exploration is done(when the robot reaches the starting point again)
-					if(exe.DoSimulatorExploration())
+					int DoSimulatorExplorationResult = exe.DoSimulatorExploration();
+					if(DoSimulatorExplorationResult == 1)
 					{
 						//send the packet to say that exploration is done
 						System.out.println("ending Exploration...");
@@ -332,9 +333,44 @@ public class Main {
 
 						//send to wait for command to wait for next phase(fastestpath)
 						currentState = State.SENDINGMAPDESCRIPTOR;
+					} else if (DoSimulatorExplorationResult == -1) {
+						System.out.println("JARRETT: Robot wants to reset prematurely. Resetting exe and robot...");
+						System.out.println("JARRETT: PLEASE BRING ROBOT BACK TO 1,18 FACING LEFT, THEN SEND IC COMMAND, THEN START EXPLORE (IT SHOULD BE RIGHT FACING AFTER IC)!");
+
+//						viz = new Visualization();
+						currentState = State.WAITINGFORCOMMAND;
+//						pf = null;
+//						recvPackets = null;
+						as = null;
+						waypoint = null;
+
+//						RobotInterface theRobot;
+						theRobot = new RealRobot(1,18, Direction.RIGHT, map, pf);
+
+						RealSensor s1 = new RealSensor(4,SensorLocation.FACING_RIGHT, 1, 1, theRobot.x, theRobot.y);
+						RealSensor s2 = new RealSensor(4,SensorLocation.FACING_RIGHT, 1, 0, theRobot.x, theRobot.y);
+						RealSensor s3 = new RealSensor(4,SensorLocation.FACING_DOWN, 1, 1, theRobot.x, theRobot.y);
+						RealSensor s4 = new RealSensor(4,SensorLocation.FACING_RIGHT, 1, -1, theRobot.x, theRobot.y);
+						RealSensor s5 = new RealSensor(4,SensorLocation.FACING_DOWN, -1, 1, theRobot.x, theRobot.y);
+						RealSensor s6 = new RealSensor(5,SensorLocation.FACING_TOP, 1, -1, theRobot.x, theRobot.y);
+
+						RealSensor[] Sensors = {s1,s2,s3,s4,s5,s6};
+						theRobot.addSensors(Sensors);
+						viz.setRobot(theRobot);
+						theRobot.setViz(viz);
+
+						map.resetMap();
+//						theRobot.setface(Direction.RIGHT);
+//						theRobot.x = 1;
+//						theRobot.y = 18;
+						// REINTIALIZE
+//						map = new Map(); // TODO: JARRETT FIX MAP
+						exe = new Exploration(null, simulator, theRobot, viz, map);
+						exe.initStartPoint(1,18);
 					}
 				}
 				currentState = State.WAITINGFORCOMMAND;
+				break;
 			case FASTESTPATHHOME:
 				//update the map nodes, then create a new astar path
 				map.updateMap();
@@ -389,8 +425,8 @@ public class Main {
 					//testing empty map
 					//set empty
 					
-					pf.sendCMD(Packet.StartFastestPathTypeOkANDROID);
-					pf.sendCMD(Packet.StartFastestPathTypeOkARDURINO);
+					pf.sendCMD(Packet.StartFastestPathTypeOkANDROID + "$"); // B // TODO: @JARRETT see if necessary or not
+					pf.sendCMD(Packet.StartFastestPathTypeOkARDURINO + "$"); // A // TODO: @JARRETT see if necessary or not
 					//NOTE
 					map.updateMap();
 					

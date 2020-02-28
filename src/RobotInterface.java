@@ -470,4 +470,5 @@ public abstract class RobotInterface {
 		g.fillArc(x_g + 45 + dirOffsetX, y_g + 45+ dirOffsetY, 20, 20, 0, 360);
 	}
 
+	public abstract boolean getWantToReset();
 }

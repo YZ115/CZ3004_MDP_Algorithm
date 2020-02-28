@@ -24,11 +24,11 @@ public class RealSensor extends Sensor{
 			score = -2;
 		else score = 0;
 
-		System.out.println("X: "+x+"\tY: "+y+"\tScore: "+score);
+//		System.out.println("X: "+x+"\tY: "+y+"\tScore: "+score);
 			
 		if(x < Map.WIDTH && y < Map.HEIGHT && x >= 0 && y >= 0)
 		{
-			System.out.println("*******X: "+x+"\tY: "+y+"\tScore: "+score);
+//			System.out.println("*******X: "+x+"\tY: "+y+"\tScore: "+score);
 			//flip the score to positive to indicate that it is a block
 			if(hitWall)
 				score = -score;
@@ -68,7 +68,7 @@ public class RealSensor extends Sensor{
 				nextLocationY = robot_y+locationOnRobot_y+i;
 			}
 			
-			System.out.println("next X: "+nextLocationX+"\tnext Y: "+nextLocationY + "\ti:" + i + "\tdata:" + data);
+//			System.out.println("next X: "+nextLocationX+"\tnext Y: "+nextLocationY + "\ti:" + i + "\tdata:" + data);
 
 			//hitwill will be true when sensor sensed a wall
 			if(!hitWall)
@@ -80,7 +80,7 @@ public class RealSensor extends Sensor{
 						hitWallret=true;
 					//hitWallret = true;
 				}
-				System.out.println("-----------------Call sense location----------------");
+//				System.out.println("-----------------Call sense location----------------");
 				SenseLocation(map,nextLocationX, nextLocationY, i, hitWall);
 			}
 			//send a 0 to signify that this is behind a wall

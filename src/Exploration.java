@@ -560,7 +560,11 @@ public class Exploration {
 		if(stepsToBacktrack <= 0)
 			backTracking = false;
 	}
-	public boolean DoInitialExploration()
+
+	// returns 1 for true
+	// returns 0 for false
+	// returns -1 for reset
+	public int DoInitialExploration()
 	{
 		//make sure there isnt a stored action before continuing, if have den do stored actions
 		if (actionsIterator != -1)
@@ -568,14 +572,16 @@ public class Exploration {
 			System.out.print("doing stored actions\n");
 			//System.out.print("doing stored actions\n");
 			doStoredActions();
-			return false;
+//			return false;
+			return 0;
 		}
 
 		//when backtracking, do not do other actions
 		if(backTracking)
 		{
 			DoIEBackTrack();
-			return false;
+//			return false;
+			return 0;
 		}
 
 		switch (robot.facing)
@@ -654,7 +660,8 @@ public class Exploration {
 			break;
 
 		default:
-			return false;
+//			return false;
+			return 0;
 		}
 
 		/*
@@ -670,13 +677,23 @@ public class Exploration {
 				map.turnoffgrid2 = true;
 			map.updateMapWithScore();
 		}*/
+
+		// TODO: @JARRETT added new method to check if robot has asked for reset
+		// If yes, then create new Robot
+		if (robot.getWantToReset()) {
+			System.out.println("JARRETT: ROBOT WANTS TO RESET");
+			return -1;
+		}
+
 		//once the robot moves, check if its at the start position to end the exploration
 		if(robotMoved && robot.getX() == startX && robot.getY() == startY)
 		{
 			System.out.println("finished exploration");
-			return true;
+//			return true;
+			return 1;
 		}
-		return false;
+//			return false;
+		return 0;
 	}
 	public boolean DoClearingUnknown()
 	{
@@ -779,8 +796,10 @@ public class Exploration {
 			return false;
 		//}
 	}
-	//returns true when robot reaches the start point
-	public boolean DoSimulatorExploration() {
+	//returns 1 when robot reaches the start point
+	//returns 0 in place of false
+	//returns -1 if want to reset
+	public int DoSimulatorExploration() {
 		try {
 			while(true) {
 				
@@ -807,7 +826,8 @@ public class Exploration {
 
 
 					//once it reaches the start point, function will return true and go on to next state
-					if(DoInitialExploration())
+					int DoInitialExplorationResult = DoInitialExploration();
+					if(DoInitialExplorationResult == 1)
 					{
 
 						//state = ExplorationState.CLEARING_UNKNOWN;
@@ -820,9 +840,13 @@ public class Exploration {
 						adjustMapForFastestPath();
 
 						//return true to skip clearing unknown
-						return true;
+//						return true;
+						return 1;
 						//System.out.println("going to clear unknown");
 
+					} else if (DoInitialExplorationResult == -1) {
+						System.out.println("Reset ordered by robot!");
+						return -1;
 					}
 
 					//draw the fastest path back home at any time
@@ -839,7 +863,8 @@ public class Exploration {
 					//System.out.println("doing clear unknown");
 					//once it finishes clearing the map and returning to the start point, function will return true
 					if(DoClearingUnknown())
-						return true;
+//						return true;
+						return 1;
 
 					//draw the fastest path back home at any time
 					map.updateMap();
@@ -863,7 +888,8 @@ public class Exploration {
 		}
 
 		//return false by default
-		return false;
+//		return false;
+		return 0;
 
 	}
 

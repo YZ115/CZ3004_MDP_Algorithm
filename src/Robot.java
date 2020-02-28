@@ -329,7 +329,10 @@ public class Robot extends RobotInterface {
 		return false;
 	}
 
-
+	@Override
+	public boolean getWantToReset() {
+		return false;
+	}
 
 
 	@Override
