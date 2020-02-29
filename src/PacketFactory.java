@@ -242,7 +242,11 @@ public class PacketFactory implements Runnable{
 	public void sideCalibrate(int x, int y, int directionNum) {
 		//we need a return packet after calibration?
 		System.out.println("debug side calibrate");
-		sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		if (isFacingWall(x, y, directionNum))
+			sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+		else
+			sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+//		sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 /*		try {
 			Thread.sleep((int) (delay));
 		}catch (Exception e){
@@ -255,7 +259,11 @@ public class PacketFactory implements Runnable{
 
 	public void frontCalibrate(int x, int y, int directionNum) {
 		System.out.println("debug front calibrate");
-		sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		if (isFacingWall(x, y, directionNum))
+			sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+		else
+			sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+//		sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 		setPreviousPacket(Packet.FRONTCALIBRATE);
 	}
 	
@@ -365,7 +373,33 @@ public class PacketFactory implements Runnable{
 		
 		//send array to android. 
 	}
-	
+
+	public boolean isFacingWall(int x, int y, int directionNum) {
+
+//		directionNum
+
+//		case UP:
+//		return 0;
+
+//		case RIGHT:
+//		return 1;
+
+//		case DOWN:
+//		return 2;
+
+//		case LEFT:
+//		return 3;
+
+		if ( (y == 1 && directionNum == 0) || // facing top wall
+				(y == 18 && directionNum == 2) || // facing bottom wall
+				(x == 1 && directionNum == 3) || // facing left wall
+				(x == 13 && directionNum == 1) ) // facing right wall
+			return true;
+		else
+			return false;
+
+	}
+
 	public boolean createOneMovementPacketToArduino(int instruction, int x, int y, int directionNum) {
 		//for one by one exploration
 		//create one Packet for one movement
@@ -401,11 +435,15 @@ public class PacketFactory implements Runnable{
 			return false;
 		}
 
-		instructionString = instructionString + Packet.Splitter + "1" + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$";
-		instructionString2 = instructionString2 + Packet.Splitter + "1" + "$";
-
+		if (isFacingWall(x, y, directionNum))
+			instructionString = instructionString + Packet.Splitter + "1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$";
+		else
+			instructionString = instructionString + Packet.Splitter + "1" + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$";
 		sc.sendPacket(instructionString);
+
+		instructionString2 = instructionString2 + Packet.Splitter + "1" + "$";
 		sc.sendPacket(instructionString2);
+
 		setPreviousPacket(instructionString);
 		return true;
 		//either send here or return string...(unsure)
