@@ -47,7 +47,9 @@ public class Exploration {
 
 	//track the number of consecutive moveForward() and call the robot to calibrate when a certain number is reached
 	int numTimesMoveForward;
+	int numForwardRight;
 	int timeToSideCalibrate;
+	int shouldRightTurnCount=0;
 
 	//the starting position of the robot
 	int startX;
@@ -85,6 +87,8 @@ public class Exploration {
 	long timeSinceLastUpdate;
 	long timeSinceStart;
 	long timeLastupdate;
+	boolean shouldTurnRightChk;
+	int timeToTurnRight;
 
 	int minute;
 	int second;
@@ -113,7 +117,9 @@ public class Exploration {
 
 
 		numTimesMoveForward = 0;
+		numForwardRight = 0;
 		timeToSideCalibrate = 3;
+		timeToTurnRight = 2;
 		//init to false to prevent exploration phase ending immediately
 		robotMoved = false;
 
@@ -443,6 +449,7 @@ public class Exploration {
 			System.out.print("Robot move forward\n");
 			traceBackSteps.push(Action.MOVE_FORWARD);
 			numTimesMoveForward++;
+			numForwardRight++;
 			break;
 		default:
 			break;
@@ -453,6 +460,8 @@ public class Exploration {
 	public void DoIETurnRight()
 	{
 		hasJustFrontCalibrated = false;
+		shouldTurnRightChk = false;
+		shouldRightTurnCount = 1;
 		actionsIterator = 0;
 		robot.turnRight();
 		System.out.print("Robot turn right\n");
@@ -465,40 +474,57 @@ public class Exploration {
 	public void DoIEMoveForward(Facing facing)
 	{
 		hasJustFrontCalibrated = false;
+		boolean hasJustSideCalibrated = false;
 		boolean hasCalibrated = false;
 		System.out.print("Robot move forward\n");
 			
 		//once timeToSideCalibrate
-		if(numTimesMoveForward >= timeToSideCalibrate)
-		{
+
+		if(numTimesMoveForward >= timeToSideCalibrate) {
 			//check if the robot side sensors have the blocks next to them to
-			if(robot.canSide_Calibrate())
-			{
+			if (robot.canSide_Calibrate()) {
 				System.out.print("align right\n");
-				robot.side_Calibrate();
+				robot.side_Calibrate(); // correct
+				//hasJustSideCalibrated = true;
+				System.out.println("----------------------------------\nSetting has calibrated to true\n-----------------------------------");
+				shouldTurnRightChk = false;
 
 				//reset the counter
 				numTimesMoveForward = 0;
 				hasCalibrated = true;
 			}
 		}
+		if(!hasCalibrated && numForwardRight>=timeToTurnRight) {
+			if (robot.isOnlyMiddleBlockedIR() || robot.isOnlyTwoBlockedIR()) {
+				robot.turnRightIR(); // robot moves one tile forward even though it turned right
+				hasJustSideCalibrated = true;
+				numForwardRight = 0;
+				System.out.println("************************\nSending turn right command to arduino\n+++++++++++++++++++++++++");
+			}
+		}
 
 		if(!hasCalibrated)
 		{
-			//simply move forward
-			robot.moveRobot();
-			previousFacing = facing;
-			traceBackFacing.push(facing);
-			robotMoved = true;
-			numTimesMoveForward++;
+			if(!hasJustSideCalibrated) {
+				//simply move forward
+				System.out.println("--------------------\nMoving robot forward\n-----------------------");
+				robot.moveRobot();
+				previousFacing = facing;
+				traceBackFacing.push(facing);
+				robotMoved = true;
+				numTimesMoveForward++;
+				numForwardRight++;
 
-			traceBackSteps.push(Action.MOVE_FORWARD);
+				traceBackSteps.push(Action.MOVE_FORWARD);
+			}
 		}
 
 	}
 	public void DoIETurnLeft()
 	{
 		actionsIterator = 0;
+		shouldTurnRightChk = false;
+		shouldRightTurnCount = 0;
 		listOfActions[0] = Action.TURN_LEFT;
 		System.out.print("Robot turn left\n");
 

@@ -90,6 +90,8 @@ public class Packet{
 	final static String FRONTCALIBRATE = "A:cmd:fc";
 	final static String INITIALCALIBRATE = "A:cmd:ic";
 	final static String SIDETURNCALIBRATE = "A:cmd:frontc";
+	final static String RIGHTTURNIR = "A:cmd:rir";
+	final static String LEFTTURNIR = "A:cmd:lir";
 
 	final static String ACKKNOWLEDGE = "P:cmd:ack";
 	

@@ -317,6 +317,11 @@ public class Robot extends RobotInterface {
         }
 	}*/
 
+    @Override
+	public void turnRightIR(){
+    	// TODO Auto-generated method stub
+	}
+
 	@Override
 	public void addSensors(RealSensor[] sensors) {
 		// TODO Auto-generated method stub
@@ -375,6 +380,10 @@ public class Robot extends RobotInterface {
 		
 	}
 
+	@Override
+	public void turnLeftIR(){
+    	// TODO Auto-generated method stub
+	}
 
 
 

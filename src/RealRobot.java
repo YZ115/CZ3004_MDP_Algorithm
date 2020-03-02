@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import java.lang.*;
 
 public class RealRobot extends RobotInterface {
 	boolean wantToReset = false;
@@ -638,8 +639,26 @@ public class RealRobot extends RobotInterface {
 		LookAtSurroundings();
 	}
 
+	@Override
+	public void turnRightIR(){
+		pf.rightIR(x, y, (getDirectionNum()+1)%4);
+		try {
+			Thread.sleep((int) (scdelay));
+		}catch (Exception e) {
+			System.out.println("You ran into an error you idiot. Get a life.");
+		}
+		LookAtSurroundings();
+	}
 
-
+	@Override
+	public void turnLeftIR(){
+		pf.leftIR(x, y, Math.abs((getDirectionNum()-1)%4));
+		try {
+			Thread.sleep((int) (scdelay));
+		}catch (Exception e) {
+			System.out.println("You ran into an error you idiot. Get a life.");
+		}
+	}
 
 	@Override
 	public void front_Calibrate() {

@@ -257,6 +257,25 @@ public class PacketFactory implements Runnable{
 		setPreviousPacket(Packet.SIDECALIBRATE);
 	}
 
+	public void rightIR(int x, int y, int directionNum) {
+		//we need a return packet after calibration?
+		System.out.println("debug right turn for image recognition");
+		if (isFacingWall(x, y, directionNum))
+			sc.sendPacket(Packet.RIGHTTURNIR + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+		else
+			sc.sendPacket(Packet.RIGHTTURNIR + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		setPreviousPacket(Packet.RIGHTTURNIR);
+	}
+
+	public void leftIR(int x, int y, int directionNum){
+		System.out.println("debug left turn for image recognition");
+		if (isFacingWall(x, y, directionNum))
+			sc.sendPacket(Packet.LEFTTURNIR + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+		else
+			sc.sendPacket(Packet.LEFTTURNIR + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		setPreviousPacket(Packet.LEFTTURNIR);
+	}
+
 	public void frontCalibrate(int x, int y, int directionNum) {
 		System.out.println("debug front calibrate");
 		if (isFacingWall(x, y, directionNum))

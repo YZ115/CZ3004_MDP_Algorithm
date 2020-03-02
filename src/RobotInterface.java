@@ -44,6 +44,8 @@ public abstract class RobotInterface {
 	public abstract void sendMapDescriptor();
 	public abstract void sideOnly_Calibrate();
 	public abstract boolean doStepFastestPath();
+	public abstract void turnRightIR();
+	public abstract void turnLeftIR();
 	//set the fastest path for the robot to follow
 	public void setFastestInstruction(Stack<Node> fast, int targetX, int targetY)
 	{
@@ -232,6 +234,53 @@ public abstract class RobotInterface {
 		
 		return false;
 	}
+
+	public boolean isOnlyMiddleBlockedIR(){
+		//returns true if the right side of the robot have blocks to use to calibrate
+		if(facing == Direction.LEFT && !isBlocked(x-1, y-2) && !isBlocked(x+1, y-2) && isBlocked(x, y-2))
+			return true;
+		else if(facing == Direction.RIGHT && !isBlocked(x-1, y+2) && !isBlocked(x+1, y+2) && isBlocked(x, y+2))
+			return true;
+		else if(facing == Direction.DOWN && !isBlocked(x-2, y-1) && !isBlocked(x-2, y+1) && isBlocked(x-2, y))
+			return true;
+		else if(facing == Direction.UP && !isBlocked(x+2, y-1) && !isBlocked(x+2, y+1) && isBlocked(x+2, y))
+			return true;
+
+
+		return false;
+	}
+
+	public boolean isOnlyTwoBlockedIR(){
+		//returns true if the right side of the robot have blocks to use to calibrate
+		if(facing == Direction.LEFT && !isBlocked(x-1, y-2) && isBlocked(x+1, y-2) && isBlocked(x, y-2) && !isBlocked(x+2, y-2))
+			return true;
+		else if(facing == Direction.RIGHT && isBlocked(x-1, y+2) && !isBlocked(x+1, y+2) && isBlocked(x, y+2) && !isBlocked(x-2, y+2))
+			return true;
+		else if(facing == Direction.DOWN && isBlocked(x-2, y-1) && !isBlocked(x-2, y+1) && isBlocked(x-2, y) && !isBlocked(x-2, y-2))
+			return true;
+		else if(facing == Direction.UP && !isBlocked(x+2, y-1) && isBlocked(x+2, y+1) && isBlocked(x+2, y) && !isBlocked(x+2, y+2))
+			return true;
+
+
+		return false;
+	}
+
+/*	public boolean shouldLeftTurnForIR()
+	{
+		//returns true if the right side of the robot have blocks to use to calibrate
+		for(int i=0;i<)
+		if(facing == Direction.LEFT && isBlocked(x, y+2))
+			return true;
+		else if(facing == Direction.RIGHT && isBlocked(x-1, y+2) && isBlocked(x+1, y+2))
+			return true;
+		else if(facing == Direction.DOWN && isBlocked(x-2, y-1) && isBlocked(x-2, y+1))
+			return true;
+		else if(facing == Direction.UP && isBlocked(x+2, y-1) && isBlocked(x+2, y+1))
+			return true;
+
+
+		return false;
+	}*/
 	
 	public boolean canFront_Calibrate()
 	{
