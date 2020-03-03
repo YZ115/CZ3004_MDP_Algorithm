@@ -1,3 +1,5 @@
+import com.sun.deploy.security.SelectableSecurityManager;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -284,6 +286,18 @@ public abstract class RobotInterface {
 		return false;
 	}
 
+	public boolean isEndLeftBlockedIR(){
+		//returns true if the right side of the robot have blocks to use to calibrate
+		for(int i = x-2; i>x-7;i--) if(facing == Direction.LEFT && isBlocked(i, y) && !isBlocked(i, y+1)) return true;
+		for(int i = y-2;i>y-7;i--) if(facing == Direction.UP && isBlocked(x, i) && !isBlocked(x+1, y)) return true;
+		for(int i = x+2;i>y+7;i++) if(facing==Direction.DOWN && isBlocked(x,i) && !isBlocked(x-1,y)) return true;
+		//if(facing == Direction.DOWN && isBlocked(x-1, y+2) && isBlocked(x-2, y+1) && !isBlocked(x-2, y-1))
+		for(int i=y+2;i>y+7;i++) if(facing==Direction.RIGHT&&isBlocked(i,y)&& !isBlocked(i, y-1)) return true;
+		//else if(facing == Direction.RIGHT && isBlocked(x+1, y+2) && isBlocked(x+2, y+1) && !isBlocked(x+2, y-1))
+
+
+		return false;
+	}
 /*	public boolean shouldLeftTurnForIR()
 	{
 		//returns true if the right side of the robot have blocks to use to calibrate
