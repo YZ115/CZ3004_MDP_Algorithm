@@ -237,13 +237,17 @@ public abstract class RobotInterface {
 
 	public boolean isOnlyMiddleBlockedIR(){
 		//returns true if the right side of the robot have blocks to use to calibrate
-		if(facing == Direction.LEFT && !isBlocked(x-1, y-2) && !isBlocked(x+1, y-2) && isBlocked(x, y-2))
+		if(facing == Direction.LEFT && !isBlockedIR(x-1, y-2) && !isBlockedIR(x+1, y-2) &&
+				(isBlocked(x, y-2)||isBlocked(x, y-3)||isBlocked(x, y-4)||isBlocked(x, y-5)))
 			return true;
-		else if(facing == Direction.RIGHT && !isBlocked(x-1, y+2) && !isBlocked(x+1, y+2) && isBlocked(x, y+2))
+		else if(facing == Direction.RIGHT && !isBlockedIR(x-1, y+2) && !isBlockedIR(x+1, y+2) &&
+				(isBlocked(x, y+2)||isBlocked(x, y+3)||isBlocked(x, y+4)||isBlocked(x, y+5)))
 			return true;
-		else if(facing == Direction.DOWN && !isBlocked(x-2, y-1) && !isBlocked(x-2, y+1) && isBlocked(x-2, y))
+		else if(facing == Direction.DOWN && !isBlockedIR(x-2, y-1) && !isBlockedIR(x-2, y+1) &&
+				(isBlocked(x-2, y)||isBlocked(x-3, y)||isBlocked(x-4, y)||isBlocked(x-5, y)))
 			return true;
-		else if(facing == Direction.UP && !isBlocked(x+2, y-1) && !isBlocked(x+2, y+1) && isBlocked(x+2, y))
+		else if(facing == Direction.UP && !isBlockedIR(x+2, y-1) && !isBlockedIR(x+2, y+1) &&
+				(isBlocked(x+2, y)||isBlocked(x+3, y)||isBlocked(x+4, y)||isBlocked(x+5, y)))
 			return true;
 
 
@@ -259,6 +263,21 @@ public abstract class RobotInterface {
 		else if(facing == Direction.DOWN && isBlocked(x-2, y-1) && !isBlocked(x-2, y+1) && isBlocked(x-2, y) && !isBlocked(x-2, y-2))
 			return true;
 		else if(facing == Direction.UP && !isBlocked(x+2, y-1) && isBlocked(x+2, y+1) && isBlocked(x+2, y) && !isBlocked(x+2, y+2))
+			return true;
+
+
+		return false;
+	}
+
+	public boolean isCornerBlockedIR(){
+		//returns true if the right side of the robot have blocks to use to calibrate
+		if(facing == Direction.LEFT && isBlocked(x-1, y-2) && isBlocked(x-2, y-1) && !isBlocked(x+1, y-2))
+			return true;
+		else if(facing == Direction.UP && isBlocked(x+1, y-2) && isBlocked(x+2, y-1) && !isBlocked(x+2, y+1))
+			return true;
+		else if(facing == Direction.DOWN && isBlocked(x-1, y+2) && isBlocked(x-2, y+1) && !isBlocked(x-2, y-1))
+			return true;
+		else if(facing == Direction.RIGHT && isBlocked(x+1, y+2) && isBlocked(x+2, y+1) && !isBlocked(x+2, y-1))
 			return true;
 
 
@@ -477,6 +496,29 @@ public abstract class RobotInterface {
 
 		if(map.getMapArray()[yi][xi] == ExplorationTypes.toInt("UNEXPLORED_EMPTY") ||
 				map.getMapArray()[yi][xi] == ExplorationTypes.toInt("UNEXPLORED_OBSTACLE"))
+			return true;
+
+		return false;
+	}
+
+	public boolean isBlockedIR(int xi, int yi){
+
+
+
+		//return 1 if obstacle.
+		//return 0 if no obstacle
+		//return -1 if out of bound
+		boolean rflag= false, tflag= false, bflag= false, lflag = false,obflag = false;
+		lflag = checkLeftBound(xi, yi);
+		tflag = checkTopBound(xi, yi);
+		rflag = checkRightBound(xi, yi);
+		bflag = checkBottomBound(xi, yi);
+		obflag = checkObstacle(xi, yi);
+		if(lflag||tflag||rflag||bflag||obflag) {
+			return true;
+		}
+
+		if(map.getMapArray()[yi][xi] == ExplorationTypes.toInt("UNEXPLORED_OBSTACLE"))
 			return true;
 
 		return false;

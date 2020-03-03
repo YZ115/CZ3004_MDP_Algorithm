@@ -523,7 +523,7 @@ public class Exploration {
 	public void DoIETurnLeft()
 	{
 		actionsIterator = 0;
-		shouldTurnRightChk = false;
+/*		boolean hasJustSideCalibrated=false;*/
 		shouldRightTurnCount = 0;
 		listOfActions[0] = Action.TURN_LEFT;
 		System.out.print("Robot turn left\n");
@@ -543,6 +543,13 @@ public class Exploration {
 			robot.side_Calibrate();
 			hasJustFrontCalibrated = true;
 			numTimesMoveForward = 0;
+		}
+		if(numForwardRight>=timeToTurnRight) {
+			if (robot.isOnlyMiddleBlockedIR() || robot.isOnlyTwoBlockedIR() || robot.isCornerBlockedIR()) {
+				robot.turnRightIR(); // robot moves one tile forward even though it turned right
+				numForwardRight = 0;
+				System.out.println("************************\nSending turn right command to arduino\n+++++++++++++++++++++++++");
+			}
 		}
 
 	}
