@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
+=======
+//import com.sun.deploy.security.SelectableSecurityManager;
+
+>>>>>>> Stashed changes
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
