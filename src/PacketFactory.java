@@ -14,6 +14,7 @@ public class PacketFactory implements Runnable{
 	
 	static SocketClient sc = null;
 	int delay = 0;
+	int whatever = 0;
 	int waypoint_x = 0, waypoint_y = 0;
 	//multi-threading this
 	//have a reference to a queue of strings or commands or something.
@@ -106,7 +107,7 @@ public class PacketFactory implements Runnable{
 				buffer.add(new Packet(Packet.StartExploration));
 				System.out.print("*******************************************received packet for Exploration*********************************************\n");
 				sc.sendPacket(Packet.StartExplorationTypeOk + "$");
-				sc.sendPacket(Packet.StartExplorationTypeOkARD + "$");
+				sc.sendPacket(Packet.StartExplorationTypeOkARD + ":" + whatever +"$");
 
 				explorationflag = true;
 				

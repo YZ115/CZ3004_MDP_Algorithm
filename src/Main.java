@@ -485,8 +485,8 @@ public class Main {
 				MapIterator.printObstacleResultsToFile(map.getMapArray(), "theObstacle.txt");
 				MapIterator.printObstacleResultsToHex("ObstacleHex.txt");
 			
-//				pf.sendCMD("B:Exploration mdf : " + MapIterator.mapDescriptorP1Hex + "$");
-//				pf.sendCMD("B:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex);
+				pf.sendCMD("B:Exploration mdf : " + MapIterator.mapDescriptorP1Hex + "$");
+				pf.sendCMD("B:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
 				currentState = State.WAITINGFORCOMMAND;
 			}
 		}
