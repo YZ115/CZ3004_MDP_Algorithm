@@ -121,8 +121,8 @@ public class Exploration {
 		numTimesMoveForward = 0;
 		numForwardRight = 0;
 		timeToSideCalibrate = 3;
-		timeToTurnRight = 2;
-		timeToTurnLeft = 2;
+		timeToTurnRight = 3;
+		timeToTurnLeft = 3;
 		//init to false to prevent exploration phase ending immediately
 		robotMoved = false;
 
