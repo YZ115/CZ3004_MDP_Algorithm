@@ -285,35 +285,32 @@ public abstract class RobotInterface {
 
 		return false;
 	}
-
-	public boolean isEndLeftBlockedIR(){
+//MODIFIED SHIT
+	public boolean shouldTurnLeftIR(){
 		//returns true if the right side of the robot have blocks to use to calibrate
-		for(int i = x-2; i>x-7;i--) if(facing == Direction.LEFT && isBlocked(i, y) && !isBlocked(i, y+1)) return true;
-		for(int i = y-2;i>y-7;i--) if(facing == Direction.UP && isBlocked(x, i) && !isBlocked(x+1, y)) return true;
-		for(int i = x+2;i>y+7;i++) if(facing==Direction.DOWN && isBlocked(x,i) && !isBlocked(x-1,y)) return true;
+		for(int i = y+2; i<y+7;i++) if(facing == Direction.LEFT && isBlocked(x-1, i) && isBlocked(x, i) && isBlocked(x+1, i)) return true;
+		for(int i = x-2;i>x-7;i--) if(facing == Direction.UP && isBlocked(i, y-1) && isBlocked(i, y) && isBlocked(i, y+1)) return true;
+		for(int i = x+2;i<x+7;i++) if(facing == Direction.DOWN && isBlocked(i,y-1) && isBlocked(i,y) && isBlocked(i, y+1)) return true;
 		//if(facing == Direction.DOWN && isBlocked(x-1, y+2) && isBlocked(x-2, y+1) && !isBlocked(x-2, y-1))
-		for(int i=y+2;i>y+7;i++) if(facing==Direction.RIGHT&&isBlocked(i,y)&& !isBlocked(i, y-1)) return true;
+		for(int i=y-2;i>y-7;i--) if(facing == Direction.RIGHT&&isBlocked(x-1,i) && isBlocked(x, i) && isBlocked(x+1, i)) return true;
 		//else if(facing == Direction.RIGHT && isBlocked(x+1, y+2) && isBlocked(x+2, y+1) && !isBlocked(x+2, y-1))
 
 
 		return false;
 	}
-/*	public boolean shouldLeftTurnForIR()
-	{
+
+	public boolean isEndLeftBlockedIR(){
 		//returns true if the right side of the robot have blocks to use to calibrate
-		for(int i=0;i<)
-		if(facing == Direction.LEFT && isBlocked(x, y+2))
-			return true;
-		else if(facing == Direction.RIGHT && isBlocked(x-1, y+2) && isBlocked(x+1, y+2))
-			return true;
-		else if(facing == Direction.DOWN && isBlocked(x-2, y-1) && isBlocked(x-2, y+1))
-			return true;
-		else if(facing == Direction.UP && isBlocked(x+2, y-1) && isBlocked(x+2, y+1))
-			return true;
+		for(int i = y+2; i<y+7;i++) if(facing == Direction.LEFT && isBlocked(x, i) && !isBlocked(x-1,i )) return true;
+		for(int i = x-2;i>x-7;i--) if(facing == Direction.UP && isBlocked(i, y) && !isBlocked(i, y-1)) return true;
+		for(int i = x+2;i<x+7;i++) if(facing==Direction.DOWN && isBlocked(i,y) && !isBlocked(i,y+1)) return true;
+		//if(facing == Direction.DOWN && isBlocked(x-1, y+2) && isBlocked(x-2, y+1) && !isBlocked(x-2, y-1))
+		for(int i=y-2;i>y-7;i--) if(facing==Direction.RIGHT&&isBlocked(x,i)&& !isBlocked(x+1, i)) return true;
+		//else if(facing == Direction.RIGHT && isBlocked(x+1, y+2) && isBlocked(x+2, y+1) && !isBlockex+2, y-1))
 
 
 		return false;
-	}*/
+	}
 	
 	public boolean canFront_Calibrate()
 	{

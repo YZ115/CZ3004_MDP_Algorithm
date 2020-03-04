@@ -658,6 +658,7 @@ public class RealRobot extends RobotInterface {
 		}catch (Exception e) {
 			System.out.println("You ran into an error you idiot. Get a life.");
 		}
+		LookAtSurroundings();
 	}
 
 	@Override

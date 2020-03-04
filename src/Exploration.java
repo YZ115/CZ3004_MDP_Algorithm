@@ -506,7 +506,7 @@ public class Exploration {
 				System.out.println("************************\nSending turn right command to arduino\n+++++++++++++++++++++++++");
 			}
 		}
-		if((numForwardLeft>=timeToTurnLeft)||robot.isEndLeftBlockedIR()){
+		if(!hasCalibrated && (((numForwardLeft>=timeToTurnLeft && robot.shouldTurnLeftIR()))||robot.isEndLeftBlockedIR())){
 			robot.turnLeftIR();
 			numForwardLeft = 0;
 			hasJustTurnedLeft = true;
