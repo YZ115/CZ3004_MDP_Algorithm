@@ -288,11 +288,11 @@ public abstract class RobotInterface {
 //MODIFIED SHIT
 	public boolean shouldTurnLeftIR(){
 		//returns true if the right side of the robot have blocks to use to calibrate
-		for(int i = y+2; i<y+7;i++) if(facing == Direction.LEFT && isBlocked(x-1, i) && isBlocked(x, i) && isBlocked(x+1, i)) return true;
-		for(int i = x-2;i>x-7;i--) if(facing == Direction.UP && isBlocked(i, y-1) && isBlocked(i, y) && isBlocked(i, y+1)) return true;
-		for(int i = x+2;i<x+7;i++) if(facing == Direction.DOWN && isBlocked(i,y-1) && isBlocked(i,y) && isBlocked(i, y+1)) return true;
+		for(int i = y+2; i<y+7;i++) if(facing == Direction.LEFT && isBlockedIR(x-1, i) && isBlockedIR(x, i) && isBlockedIR(x+1, i)) return true;
+		for(int i = x-2;i>x-7;i--) if(facing == Direction.UP && isBlockedIR(i, y-1) && isBlockedIR(i, y) && isBlockedIR(i, y+1)) return true;
+		for(int i = x+2;i<x+7;i++) if(facing == Direction.DOWN && isBlockedIR(i,y-1) && isBlockedIR(i,y) && isBlockedIR(i, y+1)) return true;
 		//if(facing == Direction.DOWN && isBlocked(x-1, y+2) && isBlocked(x-2, y+1) && !isBlocked(x-2, y-1))
-		for(int i=y-2;i>y-7;i--) if(facing == Direction.RIGHT&&isBlocked(x-1,i) && isBlocked(x, i) && isBlocked(x+1, i)) return true;
+		for(int i=y-2;i>y-7;i--) if(facing == Direction.RIGHT&&isBlockedIR(x-1,i) && isBlockedIR(x, i) && isBlockedIR(x+1, i)) return true;
 		//else if(facing == Direction.RIGHT && isBlocked(x+1, y+2) && isBlocked(x+2, y+1) && !isBlocked(x+2, y-1))
 
 
@@ -301,11 +301,11 @@ public abstract class RobotInterface {
 
 	public boolean isEndLeftBlockedIR(){
 		//returns true if the right side of the robot have blocks to use to calibrate
-		for(int i = y+2; i<y+7;i++) if(facing == Direction.LEFT && isBlocked(x, i) && !isBlocked(x-1,i )) return true;
-		for(int i = x-2;i>x-7;i--) if(facing == Direction.UP && isBlocked(i, y) && !isBlocked(i, y-1)) return true;
-		for(int i = x+2;i<x+7;i++) if(facing==Direction.DOWN && isBlocked(i,y) && !isBlocked(i,y+1)) return true;
+		for(int i = y+2; i<y+7;i++) if(facing == Direction.LEFT && isBlockedIR(x, i) && !isBlockedIR(x-1,i )) return true;
+		for(int i = x-2;i>x-7;i--) if(facing == Direction.UP && isBlockedIR(i, y) && !isBlockedIR(i, y-1)) return true;
+		for(int i = x+2;i<x+7;i++) if(facing==Direction.DOWN && isBlockedIR(i,y) && !isBlockedIR(i,y+1)) return true;
 		//if(facing == Direction.DOWN && isBlocked(x-1, y+2) && isBlocked(x-2, y+1) && !isBlocked(x-2, y-1))
-		for(int i=y-2;i>y-7;i--) if(facing==Direction.RIGHT&&isBlocked(x,i)&& !isBlocked(x+1, i)) return true;
+		for(int i=y-2;i>y-7;i--) if(facing==Direction.RIGHT&&isBlockedIR(x,i)&& !isBlockedIR(x+1, i)) return true;
 		//else if(facing == Direction.RIGHT && isBlocked(x+1, y+2) && isBlocked(x+2, y+1) && !isBlockex+2, y-1))
 
 

@@ -48,9 +48,10 @@ public class Exploration {
 	//track the number of consecutive moveForward() and call the robot to calibrate when a certain number is reached
 	int numTimesMoveForward;
 	int numForwardRight;
-	int numForwardLeft;
+	int numForwardLeft=0;
 	int timeToSideCalibrate;
 	int shouldRightTurnCount=0;
+	int shouldTurnLeftChk = 0;
 
 	//the starting position of the robot
 	int startX;
@@ -284,6 +285,7 @@ public class Exploration {
 			//if the robot can move to that spot, then calculate the cost and store it
 			if(robot.canRobotMoveHere(x + storedOffsetValues.get(i)[0], y + storedOffsetValues.get(i)[1]))
 			{
+
 				return new int[] {x, y, x + storedOffsetValues.get(i)[0], y + + storedOffsetValues.get(i)[1]};
 			}
 		}
@@ -484,6 +486,15 @@ public class Exploration {
 			
 		//once timeToSideCalibrate
 
+		if(((numForwardLeft>=timeToTurnLeft && robot.shouldTurnLeftIR()))||(shouldTurnLeftChk==0 && robot.isEndLeftBlockedIR())){
+			robot.turnLeftIR();
+			shouldTurnLeftChk++;
+			numForwardLeft = 0;
+			hasJustTurnedLeft = true;
+			System.out.println("\n\n\nNum turn left: "+numForwardLeft+"\n\n\n");
+			System.out.println("-----------------------------\nSending turn left command to arduino\n####################################");
+		}
+
 		if(numTimesMoveForward >= timeToSideCalibrate) {
 			//check if the robot side sensors have the blocks next to them to
 			if (robot.canSide_Calibrate()) {
@@ -506,12 +517,6 @@ public class Exploration {
 				System.out.println("************************\nSending turn right command to arduino\n+++++++++++++++++++++++++");
 			}
 		}
-		if(!hasCalibrated && (((numForwardLeft>=timeToTurnLeft && robot.shouldTurnLeftIR()))||robot.isEndLeftBlockedIR())){
-			robot.turnLeftIR();
-			numForwardLeft = 0;
-			hasJustTurnedLeft = true;
-			System.out.println("-----------------------------\nSending turn left command to arduino\n####################################");
-		}
 
 		if(!hasCalibrated && !hasJustSideCalibrated && !hasJustTurnedLeft)
 		{
@@ -521,6 +526,7 @@ public class Exploration {
 			previousFacing = facing;
 			traceBackFacing.push(facing);
 			robotMoved = true;
+			shouldTurnLeftChk = 0;
 			numTimesMoveForward++;
 			numForwardRight++;
 			numForwardLeft++;
@@ -553,12 +559,11 @@ public class Exploration {
 			hasJustFrontCalibrated = true;
 			numTimesMoveForward = 0;
 		}
-		if(numForwardRight>=timeToTurnRight) {
-			if (!hasJustFrontCalibrated && (robot.isOnlyMiddleBlockedIR() || robot.isOnlyTwoBlockedIR() || robot.isCornerBlockedIR())) {
-				robot.turnRightIR(); // robot moves one tile forward even though it turned right
-				numForwardRight = 0;
-				System.out.println("************************\nSending turn right command to arduino\n+++++++++++++++++++++++++");
-			}
+		if(!hasJustFrontCalibrated && !robot.canSide_Calibrate() && numForwardRight>=timeToTurnRight) {
+/*			if (!hasJustFrontCalibrated && (robot.isOnlyMiddleBlockedIR() || robot.isOnlyTwoBlockedIR() || robot.isCornerBlockedIR())) {*/
+			robot.turnRightIR(); // robot moves one tile forward even though it turned right
+			numForwardRight = 0;
+			System.out.println("************************\nSending turn right command to arduino\n+++++++++++++++++++++++++");
 		}
 /*		if((numForwardLeft>=timeToTurnLeft)||robot.isEndLeftBlockedIR()){
 			robot.turnLeftIR();
