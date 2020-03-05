@@ -289,11 +289,12 @@ public class Main {
 			case EXPLORATION:
 				//init an explore algo class and call StartExploration()
 				System.out.println("---------------------------------Exploration case---------------------------------\n");
+				int DoSimulatorExplorationResult = exe.DoSimulatorExploration();
 
 				if(simulator)
 				{
 					//will return true once the exploration is done(when the robot reaches the starting point again)
-					if(exe.DoSimulatorExploration() == 1)
+					if(DoSimulatorExplorationResult == 1)
 					{
 						Scanner sc = new Scanner(System.in);
 						theRobot.deactivateSensors();
@@ -313,7 +314,6 @@ public class Main {
 					theRobot.LookAtSurroundings();
 					//pf.sc.sendPacket(Packet.INITIALCALIBRATE);
 					//will return true once the exploration is done(when the robot reaches the starting point again)
-					int DoSimulatorExplorationResult = exe.DoSimulatorExploration();
 					if(DoSimulatorExplorationResult == 1)
 					{
 						//send the packet to say that exploration is done
@@ -322,6 +322,20 @@ public class Main {
 						end = Instant.now();
 						System.out.println("Time: " + Duration.between(starts, end));
 						pf.sc.sendPacket(Packet.StartExplorationTypeFin);
+
+						// CASE SENDINGMAPDESCRIPTOR - START
+						System.out.println("------------------------------Sending this useless descriptor------------------------------\n");
+						System.out.println("doing map descriptor");
+						MapIterator.printExploredResultsToFile(map.getMapArray(), "theExplored.txt");
+						MapIterator.printExploredResultsToHex("ExplorationHex.txt");
+						MapIterator.printObstacleResultsToFile(map.getMapArray(), "theObstacle.txt");
+						MapIterator.printObstacleResultsToHex("ObstacleHex.txt");
+						pf.sendCMD("B:ok:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
+						pf.sendCMD("B:ok:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
+						pf.sendCMD("B:ok:finish_exe_mdf$");
+						currentState = State.WAITINGFORCOMMAND;
+						// CASE SENDINGMAPDESCRIPTOR - END
+
 						try {
 							Thread.sleep(10000);
 						} catch (InterruptedException e) {
@@ -331,8 +345,6 @@ public class Main {
 						theRobot.initial_Calibrate();
 						pf.setFlag(false);
 
-						//send to wait for command to wait for next phase(fastestpath)
-						currentState = State.SENDINGMAPDESCRIPTOR;
 					} else if (DoSimulatorExplorationResult == -1) {
 						System.out.println("JARRETT: Robot wants to reset prematurely. Resetting exe and robot...");
 						System.out.println("JARRETT: PLEASE BRING ROBOT BACK TO 1,18 FACING LEFT, THEN SEND IC COMMAND, THEN START EXPLORE (IT SHOULD BE RIGHT FACING AFTER IC)!");
@@ -369,7 +381,8 @@ public class Main {
 						exe.initStartPoint(1,18);
 					}
 				}
-				currentState = State.WAITINGFORCOMMAND;
+				if(DoSimulatorExplorationResult != 1)
+					currentState = State.WAITINGFORCOMMAND;
 				break;
 			case FASTESTPATHHOME:
 				//update the map nodes, then create a new astar path
@@ -484,9 +497,12 @@ public class Main {
 
 				MapIterator.printObstacleResultsToFile(map.getMapArray(), "theObstacle.txt");
 				MapIterator.printObstacleResultsToHex("ObstacleHex.txt");
-			
-//				pf.sendCMD("B:Exploration mdf : " + MapIterator.mapDescriptorP1Hex + "$");
-//				pf.sendCMD("B:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex);
+
+				pf.sendCMD("B:ok:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
+				pf.sendCMD("B:ok:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
+
+				pf.sendCMD("B:ok:finish_exe_mdf$");
+
 				currentState = State.WAITINGFORCOMMAND;
 			}
 		}
