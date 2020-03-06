@@ -289,6 +289,7 @@ public class Main {
 			case EXPLORATION:
 				//init an explore algo class and call StartExploration()
 				System.out.println("---------------------------------Exploration case---------------------------------\n");
+				if(!simulator) theRobot.LookAtSurroundings();
 				int DoSimulatorExplorationResult = exe.DoSimulatorExploration();
 
 				if(simulator)
@@ -311,7 +312,7 @@ public class Main {
 				}
 				else
 				{
-					theRobot.LookAtSurroundings();
+					//theRobot.LookAtSurroundings();
 					//pf.sc.sendPacket(Packet.INITIALCALIBRATE);
 					//will return true once the exploration is done(when the robot reaches the starting point again)
 					if(DoSimulatorExplorationResult == 1)
@@ -330,8 +331,8 @@ public class Main {
 						MapIterator.printExploredResultsToHex("ExplorationHex.txt");
 						MapIterator.printObstacleResultsToFile(map.getMapArray(), "theObstacle.txt");
 						MapIterator.printObstacleResultsToHex("ObstacleHex.txt");
-						pf.sendCMD("B:ok:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
-						pf.sendCMD("B:ok:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
+						pf.sendCMD("B:stat:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
+						pf.sendCMD("B:stat:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
 						pf.sendCMD("B:ok:finish_exe_mdf$");
 						currentState = State.WAITINGFORCOMMAND;
 						// CASE SENDINGMAPDESCRIPTOR - END
@@ -498,8 +499,8 @@ public class Main {
 				MapIterator.printObstacleResultsToFile(map.getMapArray(), "theObstacle.txt");
 				MapIterator.printObstacleResultsToHex("ObstacleHex.txt");
 
-				pf.sendCMD("B:ok:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
-				pf.sendCMD("B:ok:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
+				pf.sendCMD("B:stat:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
+				pf.sendCMD("B:stat:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
 
 				pf.sendCMD("B:ok:finish_exe_mdf$");
 

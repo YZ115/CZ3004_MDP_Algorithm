@@ -511,6 +511,7 @@ public class Exploration {
 		}
 		if(!hasCalibrated && numForwardRight>=timeToTurnRight) {
 			if (robot.isOnlyMiddleBlockedIR() || robot.isOnlyTwoBlockedIR()) {
+//			if(!robot.canSide_Calibrate()){
 				robot.turnRightIR(); // robot moves one tile forward even though it turned right
 				hasJustSideCalibrated = true;
 				numForwardRight = 0;
