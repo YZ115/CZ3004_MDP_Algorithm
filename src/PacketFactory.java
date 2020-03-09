@@ -375,6 +375,28 @@ public class PacketFactory implements Runnable{
 		//send array to android. 
 	}
 
+	public void sendWholeMapRpi(Map mapP) {
+		//transpose the array...
+		int[][] map = mapP.getMapArray();
+		String mapCmd = Packet.MAPDESCRIPTORCMDRPI + "[";
+		int[][] newMapArray = new int[Map.WIDTH][Map.HEIGHT];
+		for(int i = 0 ; i < Map.HEIGHT; i++) {
+			for(int j = 0; j < Map.WIDTH; j++) {
+				newMapArray[j][i] = map[i][j] ;
+			}
+		}
+		for(int i = 0 ; i < Map.WIDTH; i++) {
+			mapCmd += Arrays.toString(newMapArray[i]);
+			if(i != Map.WIDTH-1)
+				mapCmd += ",";
+		}
+		mapCmd += "]$";
+		sc.sendPacket(mapCmd);
+		//transpose finished
+
+		//send array to android.
+	}
+
 	public boolean isFacingWall(int x, int y, int directionNum) {
 
 //		directionNum

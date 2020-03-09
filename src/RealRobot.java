@@ -688,5 +688,10 @@ public class RealRobot extends RobotInterface {
 
 	}
 
+	public void sendMapDescriptorRpi() {
+		pf.sendWholeMapRpi(map);
+
+	}
+
 
 }

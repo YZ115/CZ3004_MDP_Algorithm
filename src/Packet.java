@@ -92,8 +92,9 @@ public class Packet{
 	final static String SIDETURNCALIBRATE = "A:cmd:frontc";
 
 	final static String ACKKNOWLEDGE = "P:cmd:ack";
-	
+
 	final static String MAPDESCRIPTORCMD = "B:map:set:";
+	final static String MAPDESCRIPTORCMDRPI = "D:map:set:";
 
 	final static int GETMAPi = 10;
 	
