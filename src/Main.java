@@ -335,8 +335,8 @@ public class Main {
 						MapIterator.printExploredResultsToHex("ExplorationHex.txt");
 						MapIterator.printObstacleResultsToFile(map.getMapArray(), "theObstacle.txt");
 						MapIterator.printObstacleResultsToHex("ObstacleHex.txt");
-						pf.sendCMD("B:stat:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
-						pf.sendCMD("B:stat:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
+						pf.sendCMD("B:stat:Exploration mdf:" + MapIterator.mapDescriptorP1Hex + "$");
+						pf.sendCMD("B:stat:Obstacle mdf:" + MapIterator.mapDescriptorP2Hex + "$");
 						pf.sendCMD("B:stat:finish_exe_mdf$");
 						currentState = State.WAITINGFORCOMMAND;
 						// CASE SENDINGMAPDESCRIPTOR - END
@@ -504,8 +504,8 @@ public class Main {
 				MapIterator.printObstacleResultsToFile(map.getMapArray(), "theObstacle.txt");
 				MapIterator.printObstacleResultsToHex("ObstacleHex.txt");
 
-				pf.sendCMD("B:stat:Exploration mdf :" + MapIterator.mapDescriptorP1Hex + "$");
-				pf.sendCMD("B:stat:Obstacle mdf : " + MapIterator.mapDescriptorP2Hex + "$");
+				pf.sendCMD("B:stat:Exploration mdf:" + MapIterator.mapDescriptorP1Hex + "$");
+				pf.sendCMD("B:stat:Obstacle mdf:" + MapIterator.mapDescriptorP2Hex + "$");
 
 				pf.sendCMD("B:stat:finish_exe_mdf$");
 
