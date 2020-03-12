@@ -611,8 +611,34 @@ public class RealRobot extends RobotInterface {
 
 	public boolean doStepFastestPath()
 	{
-		stepByStep = true;
-		//		getFastestInstruction();
+		/*stepByStep = true;
+				getFastestInstruction();
+		//return false;
+		return true;*/
+		//getFastestInstruction(fastestPath);
+
+		if(instructionsForFastestPath.isEmpty())
+			return true;
+			//if not empty then continue doing the path
+		else
+		{
+			int instruction = (Integer) instructionsForFastestPath.remove(0);
+			switch(instruction)
+			{
+				case Packet.TURNRIGHTi:
+					turnRight();
+					//System.out.print("turning left" + x + y + '\n');
+					break;
+				case Packet.TURNLEFTi:
+					turnLeft();
+					//System.out.print("turning right" + x + y + '\n');
+					break;
+				case Packet.FORWARDi:
+					moveRobot();
+					//System.out.print("move forward" + x + y + '\n');
+					break;
+			}
+		}
 		return false;
 	}
 

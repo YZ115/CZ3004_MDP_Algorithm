@@ -697,15 +697,17 @@ public class Exploration {
 	}
 	public boolean DoClearingUnknown()
 	{
-		//System.out.println("doing clear unknown");
+		System.out.println("doing clear unknown");
 		//while(true) {
 			//if the robot is going to a block, iterate step by step
 			if(goingToBlock)
 			{
+				System.out.println("goingToBlock");
 				//if function returns true, means it has reached its current destination(an unexplored area)
 
 				if(robot.doStepFastestPath())
 				{
+					System.out.println("robot.doStepFastestPath()");
 					//make sure the robot is facing the unexplored area before finishing the current path
 					//if(robot.isFacingArea(nextUnexploredArea[0], nextUnexploredArea[1]))
 					goingToBlock = false;
@@ -714,23 +716,26 @@ public class Exploration {
 			}
 			else
 			{
+				System.out.println("else");
 				//if the array is empty then check if robot is back at start position, if not then go back start
 				if(unexploredAreas.empty())
 				{
+					System.out.println("unexploredAreas.empty()");
 					if(robot.x == startX && robot.y == startY)
 					{
+						System.out.println("robot.x == startX && robot.y == startY");
 						PathDrawer.removePath();
 						return true;
 					}
 					//if the grid is not fully explored, then continue exploring
 					else if (getMapExplored() <290)//!= map.HEIGHT*map.WIDTH)
 					{
-						//System.out.print("checking if map got properly explored aka 90% of map");
+						System.out.print("checking if map got properly explored aka 90% of map");
 						inputAllUnexploredAreas();
 					}
 					else
 					{
-						//System.out.print("finished exploring part 2, going back to start");
+						System.out.print("finished exploring part 2, going back to start");
 
 						pathToNextUnexploredArea = new Astar(map.getNodeXY(robot.x, robot.y), map.getNodeXY(startX, startY));
 
@@ -746,6 +751,7 @@ public class Exploration {
 				}
 				else
 				{
+					System.out.print("update map nodes for A star\n");
 					//update map nodes for A star
 					map.updateMap();
 
@@ -757,7 +763,7 @@ public class Exploration {
 
 					if(!unexploredAreas.empty())
 					{
-						//System.out.print("unexploreaAreas.size = " + unexploredAreas.size() + "\n");
+						System.out.print("unexploreaAreas.size = " + unexploredAreas.size() + "\n");
 						for(int i = 0; i < unexploredAreas.size(); i++)
 						{
 							//put the x and y value of the unexplored area
@@ -777,8 +783,8 @@ public class Exploration {
 																unexploredAreas.get(indexOfClosestArea)[2],
 																unexploredAreas.get(indexOfClosestArea)[3]));
 
-						//System.out.print("next area to explore " + unexploredAreas.get(indexOfClosestArea)[0] +" and "+ unexploredAreas.get(indexOfClosestArea)[1] +
-						//		" but going to " + unexploredAreas.get(indexOfClosestArea)[2] + " and " + unexploredAreas.get(indexOfClosestArea)[3] + '\n');
+						System.out.print("next area to explore " + unexploredAreas.get(indexOfClosestArea)[0] +" and "+ unexploredAreas.get(indexOfClosestArea)[1] +
+								" but going to " + unexploredAreas.get(indexOfClosestArea)[2] + " and " + unexploredAreas.get(indexOfClosestArea)[3] + '\n');
 
 
 						nextUnexploredArea = unexploredAreas.remove(indexOfClosestArea);
@@ -830,18 +836,27 @@ public class Exploration {
 					if(DoInitialExplorationResult == 1)
 					{
 
-						//state = ExplorationState.CLEARING_UNKNOWN;
+						state = ExplorationState.CLEARING_UNKNOWN;
 
 						//create a int array stack to input coordinates
-						//inputAllUnexploredAreas();
+						//Nobody knows what's going on but everybody hope it works!
+						//Oh Krishna, Allah, Jesus please help us!!!!
+						inputAllUnexploredAreas();
+
+						if(unexploredAreas.size()!=0){
+							robot.side_Calibrate();
+							robot.front_Calibrate();
+						}
+						//if(unexploredAreas.size()<10) return 1;
 
 
 						//remove blocks when there are more than 30 blocks and change all unexplored areas to explored
-						adjustMapForFastestPath();
+//						adjustMapForFastestPath();
 
 						//return true to skip clearing unknown
 //						return true;
-						return 1;
+//						return 1;
+						break;
 						//System.out.println("going to clear unknown");
 
 					} else if (DoInitialExplorationResult == -1) {
