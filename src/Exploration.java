@@ -470,6 +470,7 @@ public class Exploration {
 			hasJustFrontCalibrated = true;
 			numTimesMoveForward=0;
 		}
+		//Turn right after all calibrations are done
 		robot.turnRight();
 		System.out.print("Robot turn right\n");
 		traceBackSteps.push(Action.TURN_RIGHT);
