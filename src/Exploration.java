@@ -464,6 +464,7 @@ public class Exploration {
 			hasJustFrontCalibrated = true;
 			numTimesMoveForward=0;
 		}
+		//Check is can only left calibrate after a certain number of steps
 		else if(robot.canLeft_Calibrate()&&!hasJustFrontCalibrated){
 			robot.left_Calibrate();
 			hasJustFrontCalibrated = true;
