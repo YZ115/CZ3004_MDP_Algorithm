@@ -458,6 +458,7 @@ public class Exploration {
 		System.out.print("Robot turn right\n");
 		hasJustFrontCalibrated = false;
 		actionsIterator = 0;
+		//Check if can front calibrate and can left calibrate(has 3 blocks)
 		if(robot.canFront_Calibrate()&&robot.canLeft_Calibrate()&&!hasJustFrontCalibrated){
 			robot.front_Calibrate();
 			hasJustFrontCalibrated = true;
