@@ -40,6 +40,7 @@ public abstract class RobotInterface {
 	public abstract void deactivateSensors();
 	public abstract void reverse();
 	public abstract void side_Calibrate();
+	public abstract void left_Calibrate();
 	public abstract void front_Calibrate();
 	public abstract void initial_Calibrate();
 	public abstract void sendMapDescriptor();
@@ -247,6 +248,22 @@ public abstract class RobotInterface {
 			return true;
 			
 		
+		return false;
+	}
+
+	public boolean canLeft_Calibrate()
+	{
+		//returns true if the right side of the robot have blocks to use to calibrate
+		if(facing == Direction.LEFT && isBlocked(x-1, y+2) && isBlocked(x+1, y+2))
+			return true;
+		else if(facing == Direction.RIGHT && isBlocked(x-1, y-2) && isBlocked(x+1, y-2))
+			return true;
+		else if(facing == Direction.DOWN && isBlocked(x+2, y-1) && isBlocked(x+2, y+1))
+			return true;
+		else if(facing == Direction.UP && isBlocked(x-2, y-1) && isBlocked(x-2, y+1))
+			return true;
+
+
 		return false;
 	}
 			

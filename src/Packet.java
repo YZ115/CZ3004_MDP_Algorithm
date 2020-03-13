@@ -87,6 +87,7 @@ public class Packet{
 	final static String REVERSECMDANDROID =  ANDROID + Splitter +  Stat + Splitter + REVERSE;
 
 	final static String SIDECALIBRATE = "A:cmd:sc"; // TODO: @Jarrett removed $
+	final static String LEFTCALIBRATE = "A:cmd:lc";
 	final static String FRONTCALIBRATE = "A:cmd:fc";
 	final static String INITIALCALIBRATE = "A:cmd:ic";
 	final static String SIDETURNCALIBRATE = "A:cmd:frontc";

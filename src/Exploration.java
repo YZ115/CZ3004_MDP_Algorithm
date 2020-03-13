@@ -114,6 +114,9 @@ public class Exploration {
 
 		numTimesMoveForward = 0;
 		timeToSideCalibrate = 3;
+
+		int timeToTurnRight = 3;
+		int timeToTurnLeft = 3;
 		//init to false to prevent exploration phase ending immediately
 		robotMoved = false;
 
@@ -132,7 +135,7 @@ public class Exploration {
 
 		//variables to control the flow of exploration, mainly for checklist
 
-		stepsPerSecond = 2f;
+		stepsPerSecond = 10f;
 
 
 		//% of map explored before stopping
@@ -452,8 +455,19 @@ public class Exploration {
 	}
 	public void DoIETurnRight()
 	{
+		System.out.print("Robot turn right\n");
 		hasJustFrontCalibrated = false;
 		actionsIterator = 0;
+		if(robot.canFront_Calibrate()&&robot.canLeft_Calibrate()&&!hasJustFrontCalibrated){
+			robot.front_Calibrate();
+			hasJustFrontCalibrated = true;
+			numTimesMoveForward=0;
+		}
+		else if(robot.canLeft_Calibrate()&&!hasJustFrontCalibrated){
+			robot.left_Calibrate();
+			hasJustFrontCalibrated = true;
+			numTimesMoveForward=0;
+		}
 		robot.turnRight();
 		System.out.print("Robot turn right\n");
 		traceBackSteps.push(Action.TURN_RIGHT);
@@ -791,6 +805,7 @@ public class Exploration {
 
 						//send it to the robot to store the instruction
 						Stack<Node> fast = pathToNextUnexploredArea.getFastestPath();
+						System.out.print("setting fastest instructions\n++++++++++++++++++++++++++++++");
 						robot.setFastestInstruction(fast, nextUnexploredArea[0], nextUnexploredArea[1]);
 
 						//updates the pathdrawer for graphics
@@ -841,23 +856,24 @@ public class Exploration {
 						//create a int array stack to input coordinates
 						//Nobody knows what's going on but everybody hope it works!
 						//Oh Krishna, Allah, Jesus please help us!!!!
-						inputAllUnexploredAreas();
+						//*****inputAllUnexploredAreas();
 
-						if(unexploredAreas.size()!=0){
+/*						if(unexploredAreas.size()!=0){
 							robot.side_Calibrate();
 							robot.front_Calibrate();
-						}
+						}*/
 						//if(unexploredAreas.size()<10) return 1;
 
 
 						//remove blocks when there are more than 30 blocks and change all unexplored areas to explored
-//						adjustMapForFastestPath();
+						adjustMapForFastestPath();
 
 						//return true to skip clearing unknown
 //						return true;
-//						return 1;
-						break;
-						//System.out.println("going to clear unknown");
+						return 1;
+
+						//*****System.out.println("going to clear unknown");
+						//*****break;
 
 					} else if (DoInitialExplorationResult == -1) {
 						System.out.println("Reset ordered by robot!");
@@ -869,10 +885,7 @@ public class Exploration {
 					//calculate the fastest path back home
 					//Astar pathToStart = new Astar(map.getNodeXY(robot.x, robot.y), map.getNodeXY(startX,startY));
 					//PathDrawer.update(robot.x, robot.y, pathToStart.getFastestPath());
-
-
-
-				break;
+					break;
 
 				case CLEARING_UNKNOWN:
 					//System.out.println("doing clear unknown");

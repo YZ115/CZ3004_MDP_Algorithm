@@ -367,6 +367,12 @@ public class Robot extends RobotInterface {
 		
 	}
 
+	@Override
+	public void left_Calibrate(){
+		System.out.println("Left Calibrate");
+		//TODO Auto-generated method stub
+	}
+
 
 	@Override
 	public void front_Calibrate() {

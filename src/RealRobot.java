@@ -11,6 +11,8 @@ public class RealRobot extends RobotInterface {
 	int directionNum = -1;
 	int delay = 150;
 	int scdelay = 0;
+	int sideCalibrateCount = 0;
+	int frontCalibrateCount = 0;
 /*	boolean hitWallFront=false;
 	boolean hitWallRight=false;*/
 	boolean stepByStep = true;
@@ -635,6 +637,20 @@ public class RealRobot extends RobotInterface {
 					break;
 				case Packet.FORWARDi:
 					moveRobot();
+					if(canSide_Calibrate() && sideCalibrateCount==0){
+						side_Calibrate();
+					}
+					else sideCalibrateCount++;
+					if(canFront_Calibrate() && frontCalibrateCount==0){
+						front_Calibrate();
+					}
+					else frontCalibrateCount++;
+					if (!canFront_Calibrate() && !canSide_Calibrate()){
+						sideCalibrateCount++;
+						frontCalibrateCount++;
+					}
+					if(sideCalibrateCount==3) sideCalibrateCount=0;
+					if(frontCalibrateCount==3) frontCalibrateCount=0;
 					//System.out.print("move forward" + x + y + '\n');
 					break;
 			}
@@ -671,6 +687,13 @@ public class RealRobot extends RobotInterface {
 	public void front_Calibrate() {
 		System.out.println("front calibrating");
 		pf.frontCalibrate(x, y, (getDirectionNum()+1)%4);
+		LookAtSurroundings();
+	}
+
+	@Override
+	public void left_Calibrate() {
+		System.out.println("left calibrating");
+		pf.leftCalibrate(x, y, (getDirectionNum()-1)%4);
 		LookAtSurroundings();
 	}
 

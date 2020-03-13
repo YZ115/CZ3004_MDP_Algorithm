@@ -267,6 +267,16 @@ public class PacketFactory implements Runnable{
 //		sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 		setPreviousPacket(Packet.FRONTCALIBRATE);
 	}
+
+	public void leftCalibrate(int x, int y, int directionNum) {
+		System.out.println("debug left calibrate");
+		if (isFacingWall(x, y, directionNum))
+			sc.sendPacket(Packet.LEFTCALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+		else
+			sc.sendPacket(Packet.LEFTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+//		sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		setPreviousPacket(Packet.LEFTCALIBRATE);
+	}
 	
 	public void initialCalibrate() {
 		sc.sendPacket(Packet.INITIALCALIBRATE);
