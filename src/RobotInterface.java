@@ -24,9 +24,10 @@ public abstract class RobotInterface {
 	final int HEIGHT = 20;
 
 	//fastest path from a point to another point
-	Stack<Node> fastestPath;
+	Stack<Node> fastestPath = new Stack<Node>();
 	//the converted int instructions from the above stack array
-	Stack<Integer> instructionsForFastestPath;
+//	Stack<Integer> instructionsForFastestPath;
+	Stack<Integer> instructionsForFastestPath = new Stack<Integer>();
 
 	public abstract void addSensors(RealSensor[] sensors);
 	public abstract void addSensors(Sensor[] sensors);
