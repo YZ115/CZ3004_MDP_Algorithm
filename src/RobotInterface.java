@@ -60,7 +60,8 @@ public abstract class RobotInterface {
 		{
 			//if the stack is empty, means the nodes have fully been converted
 			//next step will be to TURN towards the correct direction
-	    	if(fast.empty())
+			if(fast.empty())break;
+	    	/*if(fast.empty())
 	    	{
 	    		//check if the robot will be facing the direction of the block to "explore" it
 	    		//if not then add turn instructions
@@ -82,7 +83,7 @@ public abstract class RobotInterface {
 	    		
 
 	    		break;
-	    	}
+	    	}*/
 	    	//if not empty then convert the nodes to instructions
 	    	else
 	    	{

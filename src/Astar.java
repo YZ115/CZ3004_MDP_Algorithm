@@ -49,10 +49,9 @@ public class Astar {
 
         while (!openList.isEmpty()) {
             Node node = (Node)openList.removeFirst();
+
             ((Node)node).setFacing();
-
-
-            if (node == goalNode) {
+            if(node == goalNode){
                 return constructPath(goalNode);
             }
             List neighbors = node.getNeighbors();
@@ -60,7 +59,7 @@ public class Astar {
                 Node neighborNode = (Node)neighbors.get(i);
                 boolean isOpen = openList.contains(neighborNode);
                 boolean isClosed = closedList.contains(neighborNode);
-                 boolean isObstacle = (neighborNode).isObstacle();
+                boolean isObstacle = (neighborNode).isObstacle();
                 int clearance = neighborNode.getClearance();
                 float costFromStart = node.getCost(neighborNode,goalNode) + 1;
                 //check if the neighbors has not been traversed OR

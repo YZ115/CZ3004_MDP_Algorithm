@@ -320,7 +320,7 @@ public class Exploration {
 			{
 				if(mapArray[y][x] == ExplorationTypes.toInt("UNEXPLORED_EMPTY") || mapArray[y][x] == ExplorationTypes.toInt("UNEXPLORED_OBSTACLE"))
 				{
-					//need to input a area that the robot has explored and is next to the unexplored area, and that the robot can "fit/go" there
+					//need to input an area that the robot has explored and is next to the unexplored area, and that the robot can "fit/go" there
 					mapCoordinate = getNearestCoordinateToUnExploredArea(x,y);
 
 					//if the values are -1, do not push into the stack
@@ -737,11 +737,13 @@ public class Exploration {
 				//if the array is empty then check if robot is back at start position, if not then go back start
 				if(unexploredAreas.empty())
 				{
+					System.out.println("unexploredAreas.empty()\n++++++++++++++++++++++++++++++++++");
 					System.out.println("unexploredAreas.empty()");
 					if(robot.x == startX && robot.y == startY)
 					{
 						System.out.println("robot.x == startX && robot.y == startY");
 						PathDrawer.removePath();
+						adjustMapForFastestPath();
 						return true;
 					}
 					//if the grid is not fully explored, then continue exploring
@@ -784,9 +786,18 @@ public class Exploration {
 						for(int i = 0; i < unexploredAreas.size(); i++)
 						{
 							//put the x and y value of the unexplored area
+							//[0]=x value of unexplored area
+							//[1]=y value of unexplored area
+							//[2]=x value of coordinate of point next to unexplored area that the robot can access
+							//[3]=y value of coordinate of point next to unexplored area that the robot can access
+							System.out.println("unexploredAreas.get("+i+")[0]="+unexploredAreas.get(i)[0]);
+							System.out.println("unexploredAreas.get("+i+")[1]="+unexploredAreas.get(i)[1]);
+							System.out.println("unexploredAreas.get("+i+")[2]="+unexploredAreas.get(i)[2]);
+							System.out.println("unexploredAreas.get("+i+")[3]="+unexploredAreas.get(i)[3]);
 							pathToNextUnexploredArea = new Astar(map.getNodeXY(robot.x, robot.y), map.getNodeXY(unexploredAreas.get(i)[2], unexploredAreas.get(i)[3]));
 							pathToNextUnexploredArea.getFastestPath();
 							int cost = pathToNextUnexploredArea.getCost();
+							System.out.println("Costs:"+cost);
 
 							//if the cost is lesser than the current lowest than update the indexOfClosestArea
 							if(cost < costOfClosest)
@@ -859,7 +870,7 @@ public class Exploration {
 						//create a int array stack to input coordinates
 						//Nobody knows what's going on but everybody hope it works!
 						//Oh Krishna, Allah, Jesus please help us!!!!
-						//*****inputAllUnexploredAreas();
+						inputAllUnexploredAreas();
 
 /*						if(unexploredAreas.size()!=0){
 							robot.side_Calibrate();
@@ -869,14 +880,14 @@ public class Exploration {
 
 
 						//remove blocks when there are more than 30 blocks and change all unexplored areas to explored
-						adjustMapForFastestPath();
+						//adjustMapForFastestPath();
 
 						//return true to skip clearing unknown
 //						return true;
-						return 1;
+						//-----return 1;
 
 						//*****System.out.println("going to clear unknown");
-						//*****break;
+						break;
 
 					} else if (DoInitialExplorationResult == -1) {
 						System.out.println("Reset ordered by robot!");
@@ -893,6 +904,7 @@ public class Exploration {
 				case CLEARING_UNKNOWN:
 					//System.out.println("doing clear unknown");
 					//once it finishes clearing the map and returning to the start point, function will return true
+					stepsPerSecond = 2f;
 					if(DoClearingUnknown())
 //						return true;
 						return 1;
