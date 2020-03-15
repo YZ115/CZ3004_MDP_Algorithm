@@ -904,7 +904,7 @@ public class Exploration {
 				case CLEARING_UNKNOWN:
 					//System.out.println("doing clear unknown");
 					//once it finishes clearing the map and returning to the start point, function will return true
-					stepsPerSecond = 2f;
+					stepsPerSecond = 50f;
 					if(DoClearingUnknown())
 //						return true;
 						return 1;
