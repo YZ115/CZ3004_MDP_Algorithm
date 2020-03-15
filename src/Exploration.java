@@ -114,11 +114,10 @@ public class Exploration {
 
 		numTimesMoveForward = 0;
 		timeToSideCalibrate = 3;
-<<<<<<< Updated upstream
-=======
-		timeToTurnRight = 3;
-		timeToTurnLeft = 3;
->>>>>>> Stashed changes
+
+		int timeToTurnRight = 3;
+		int timeToTurnLeft = 3;
+
 		//init to false to prevent exploration phase ending immediately
 		robotMoved = false;
 

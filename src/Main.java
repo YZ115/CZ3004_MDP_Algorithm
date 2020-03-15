@@ -38,6 +38,8 @@ public class Main {
 		String OS = System.getProperty("os.name").toLowerCase();
 
 		OperatingSystem theOS = OperatingSystem.Windows;
+		int wayx = 6;
+		int wayy = 8;
 
 		if(OS.indexOf("win") >= 0)
 			theOS = OperatingSystem.Windows;
@@ -191,9 +193,9 @@ public class Main {
 //					sc.close();
 					if(scanType == 1) {
 						System.out.println("Please enter x coordinate: ");
-						int wayx = sc.nextInt();
+						wayx = sc.nextInt();
 						System.out.println("Please enter y coordinate: ");
-						int wayy = sc.nextInt();
+						wayy = sc.nextInt();
 						//set robot waypoint
 						System.out.println("setting waypoint position at :" + wayx+ ", " + wayy);
 						waypoint = new Node(wayx, wayy);
@@ -244,8 +246,8 @@ public class Main {
 					Packet  pkt = recvPackets.remove();
 					System.out.println(pkt.getType());
 					if(pkt.getType() == Packet.SetWayPointi) {
-						int wayx = pkt.getX();
-						int wayy = pkt.getY();
+						wayx = pkt.getX();
+						wayy = pkt.getY();
 						//set robot waypoint
 						System.out.println("setting waypoint position at :" + wayx+ ", " + wayy);
 						waypoint = new Node(wayx, wayy);
@@ -427,7 +429,7 @@ public class Main {
 					theRobot.initial_Calibrate();
 					//update the map nodes, then create a new astar path
 					map.updateMap();
-					waypoint = map.getNodeXY(1, 1);
+					waypoint = map.getNodeXY(wayx, wayy);
 					Astar as31 = new Astar(map.getNodeXY(theRobot.x, theRobot.y),waypoint);
 					Astar as2 = new Astar(waypoint, map.getNodeXY(13, 1));
 					theRobot.getFastestInstruction(as31.getFastestPath());
