@@ -638,7 +638,12 @@ public class RealRobot extends RobotInterface {
 				case Packet.FORWARDi:
 					moveRobot();
 					if(canSide_Calibrate() && sideCalibrateCount==0){
+						System.out.println("Right calibrating\n+++++++++++++++++++++++++++++++++");
 						side_Calibrate();
+					}
+					else if (canLeft_Calibrate() && sideCalibrateCount==0){
+						System.out.println("Left calibrating\n---------------------------------");
+						left_Calibrate();
 					}
 					else sideCalibrateCount++;
 					if(canFront_Calibrate() && frontCalibrateCount==0){

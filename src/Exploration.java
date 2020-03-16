@@ -135,7 +135,7 @@ public class Exploration {
 
 		//variables to control the flow of exploration, mainly for checklist
 
-		stepsPerSecond = 10f;
+		stepsPerSecond = 50f;
 
 
 		//% of map explored before stopping
@@ -904,7 +904,7 @@ public class Exploration {
 				case CLEARING_UNKNOWN:
 					//System.out.println("doing clear unknown");
 					//once it finishes clearing the map and returning to the start point, function will return true
-					stepsPerSecond = 50f;
+					stepsPerSecond = 2f;
 					if(DoClearingUnknown())
 //						return true;
 						return 1;
