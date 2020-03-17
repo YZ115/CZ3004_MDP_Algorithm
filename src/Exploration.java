@@ -498,6 +498,12 @@ public class Exploration {
 				numTimesMoveForward = 0;
 				hasCalibrated = true;
 			}
+			else if (robot.canLeft_Calibrate()){
+				System.out.println("align left\n");
+				robot.left_Calibrate();
+				numTimesMoveForward = 0;
+				hasCalibrated = true;
+			}
 		}
 
 		if(!hasCalibrated)
