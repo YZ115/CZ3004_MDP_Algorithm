@@ -16,6 +16,10 @@ public class Robot extends RobotInterface {
 	boolean hitWallRight=false;
 	int sideCalibrateCount = 0;
 	int frontCalibrateCount = 0;
+	int sideCalibrateNum = 3;
+	int FrontCalibrateNum = 3;
+	boolean frontCalibrated = false;
+	boolean sideCalibrated = false;
 //	ArrayList<Node> TraverseNodes = new ArrayList();
 
 	public Robot(int x, int y, Direction facing, Map map){
@@ -246,6 +250,8 @@ public class Robot extends RobotInterface {
     	//if not empty then continue doing the path
     	else
     	{
+    		frontCalibrated = false;
+    		sideCalibrated = false;
     		int instruction = (Integer) instructionsForFastestPath.remove(0);
 	    	switch(instruction)
 	    	{
@@ -258,28 +264,32 @@ public class Robot extends RobotInterface {
 	    		//System.out.print("turning right" + x + y + '\n');
 	    		break;
 	    	case Packet.FORWARDi:
-	    		moveRobot();
-				if(canSide_Calibrate() && sideCalibrateCount==0){
-					System.out.println("Right calibrating\n+++++++++++++++++++++++++++++++++");
-					side_Calibrate();
+				if(sideCalibrateCount>=sideCalibrateNum) {
+					if (canSide_Calibrate()) {
+						System.out.println("Right calibrating\n+++++++++++++++++++++++++++++++++");
+						side_Calibrate();
+						sideCalibrateCount=0;
+					} else if (canLeft_Calibrate()) {
+						System.out.println("Left calibrating\n---------------------------------");
+						left_Calibrate();
+						sideCalibrateCount=0;
+					}
+					sideCalibrated = true;
+					//else sideCalibrateCount++;
 				}
-				else if (canLeft_Calibrate() && sideCalibrateCount==0){
-					System.out.println("Left calibrating\n---------------------------------");
-					left_Calibrate();
+				if(frontCalibrateCount>=FrontCalibrateNum) {
+					if (canFront_Calibrate()) {
+						System.out.println("Front calibrating\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+						front_Calibrate();
+						frontCalibrateCount=0;
+						frontCalibrated = true;
+					}
+					//else frontCalibrateCount++;
 				}
-				else sideCalibrateCount++;
-				if(canFront_Calibrate() && frontCalibrateCount==0){
-					front_Calibrate();
-				}
-				else frontCalibrateCount++;
-				if (!canFront_Calibrate() && !canSide_Calibrate()){
-					sideCalibrateCount++;
-					frontCalibrateCount++;
-				}
-				if(sideCalibrateCount==3) sideCalibrateCount=0;
-				if(frontCalibrateCount==3) frontCalibrateCount=0;
-	    		//System.out.print("move forward" + x + y + '\n');
-	    		break;
+				if (!frontCalibrated) frontCalibrateCount++;
+				if(!sideCalibrated) sideCalibrateCount++;
+				moveRobot();
+				break;
 	    	}
     	}
     	return false;
