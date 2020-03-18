@@ -121,10 +121,10 @@ public class RealRobot extends RobotInterface {
 
 		if(stepByStep) {
 
-			//			count++;
-			//			if(count % 4 == 0) {
+						count++;
+						if(count % 4 == 0) {
 						sendMapDescriptor();	
-			//			}
+						}
 			//pf.createOneMovementPacketToArduino(Packet.FORWARDi);
 //			System.out.println(facing);
 //			pf.sendPhotoDataToRpi(x,y,directionNum);

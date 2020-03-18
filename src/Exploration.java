@@ -748,7 +748,7 @@ public class Exploration {
 					if(robot.x == startX && robot.y == startY)
 					{
 						System.out.println("robot.x == startX && robot.y == startY");
-						PathDrawer.removePath();
+						//PathDrawer.removePath();
 						adjustMapForFastestPath();
 						return true;
 					}
@@ -870,7 +870,7 @@ public class Exploration {
 					int DoInitialExplorationResult = DoInitialExploration();
 					if(DoInitialExplorationResult == 1)
 					{
-
+						robot.sendMapDescriptor();
 						state = ExplorationState.CLEARING_UNKNOWN;
 
 						//create a int array stack to input coordinates
@@ -911,9 +911,11 @@ public class Exploration {
 					//System.out.println("doing clear unknown");
 					//once it finishes clearing the map and returning to the start point, function will return true
 					stepsPerSecond = 2f;
-					if(DoClearingUnknown())
+					if(DoClearingUnknown()) {
+						//robot.sendMapDescriptor();
 //						return true;
 						return 1;
+					}
 
 					//draw the fastest path back home at any time
 					map.updateMap();

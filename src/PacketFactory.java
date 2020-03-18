@@ -16,6 +16,7 @@ public class PacketFactory implements Runnable{
 	int delay = 0;
 	int whatever = 0;
 	int waypoint_x = 0, waypoint_y = 0;
+	boolean camRun = true;
 	//multi-threading this
 	//have a reference to a queue of strings or commands or something.
 	//will add commands that maps to do something on the robot to this.
@@ -243,10 +244,14 @@ public class PacketFactory implements Runnable{
 	public void sideCalibrate(int x, int y, int directionNum) {
 		//we need a return packet after calibration?
 		System.out.println("debug side calibrate");
-		if (isFacingWall(x, y, directionNum))
-			sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
-		else
-			sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		if (isFacingWall(x, y, directionNum)) {
+			if(camRun) sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+			else sc.sendPacket(Packet.SIDECALIBRATE);
+		}
+		else {
+			if(camRun) sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+			else sc.sendPacket(Packet.SIDECALIBRATE);
+		}
 //		sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 /*		try {
 			Thread.sleep((int) (delay));
@@ -260,20 +265,28 @@ public class PacketFactory implements Runnable{
 
 	public void frontCalibrate(int x, int y, int directionNum) {
 		System.out.println("debug front calibrate");
-		if (isFacingWall(x, y, directionNum))
-			sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
-		else
-			sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		if (isFacingWall(x, y, directionNum)) {
+			if(camRun) sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+			else sc.sendPacket(Packet.FRONTCALIBRATE);
+		}
+		else {
+			if(camRun) sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+			else sc.sendPacket(Packet.FRONTCALIBRATE);
+		}
 //		sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 		setPreviousPacket(Packet.FRONTCALIBRATE);
 	}
 
 	public void leftCalibrate(int x, int y, int directionNum) {
 		System.out.println("debug left calibrate");
-		if (isFacingWall(x, y, directionNum))
-			sc.sendPacket(Packet.LEFTCALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
-		else
-			sc.sendPacket(Packet.LEFTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+		if (isFacingWall(x, y, directionNum)) {
+			if (camRun) sc.sendPacket(Packet.LEFTCALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
+			else sc.sendPacket(Packet.LEFTCALIBRATE);
+		}
+		else {
+			if(camRun) sc.sendPacket(Packet.LEFTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
+			else sc.sendPacket(Packet.LEFTCALIBRATE);
+		}
 //		sc.sendPacket(Packet.FRONTCALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 		setPreviousPacket(Packet.LEFTCALIBRATE);
 	}
