@@ -21,7 +21,7 @@ public class Exploration {
 	}
 	ExplorationState state;
 	////////////////////////////////////////import variable!!!////////////////////////////////////////////
-	boolean exploreUnexplored = true;
+	boolean exploreUnexplored = false;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -878,6 +878,7 @@ public class Exploration {
 					{
 						robot.sendMapDescriptor();
 						if(exploreUnexplored) {
+							System.out.println("Doing explore Unexplored\n\n\n\n\n");
 							state = ExplorationState.CLEARING_UNKNOWN;
 
 							//create a int array stack to input coordinates
@@ -903,6 +904,7 @@ public class Exploration {
 							break;
 						}
 						else{
+							System.out.println("NOT!!! doing explore Unexplored\n\n\n\n\n");
 							adjustMapForFastestPath();
 							return 1;
 						}
