@@ -20,6 +20,9 @@ public class Exploration {
 		CLEARING_UNKNOWN,
 	}
 	ExplorationState state;
+	////////////////////////////////////////import variable!!!////////////////////////////////////////////
+	boolean exploreUnexplored = true;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	Visualization viz;
@@ -874,29 +877,35 @@ public class Exploration {
 					if(DoInitialExplorationResult == 1)
 					{
 						robot.sendMapDescriptor();
-						state = ExplorationState.CLEARING_UNKNOWN;
+						if(exploreUnexplored) {
+							state = ExplorationState.CLEARING_UNKNOWN;
 
-						//create a int array stack to input coordinates
-						//Nobody knows what's going on but everybody hope it works!
-						//Oh Krishna, Allah, Jesus please help us!!!!
-						inputAllUnexploredAreas();
+							//create a int array stack to input coordinates
+							//Nobody knows what's going on but everybody hope it works!
+							//Oh Krishna, Allah, Jesus please help us!!!!
+							inputAllUnexploredAreas();
 
 /*						if(unexploredAreas.size()!=0){
 							robot.side_Calibrate();
 							robot.front_Calibrate();
 						}*/
-						//if(unexploredAreas.size()<10) return 1;
+							//if(unexploredAreas.size()<10) return 1;
 
 
-						//remove blocks when there are more than 30 blocks and change all unexplored areas to explored
-						//adjustMapForFastestPath();
+							//remove blocks when there are more than 30 blocks and change all unexplored areas to explored
+							//adjustMapForFastestPath();
 
-						//return true to skip clearing unknown
+							//return true to skip clearing unknown
 //						return true;
-						//-----return 1;
+							//-----return 1;
 
-						//*****System.out.println("going to clear unknown");
-						break;
+							//*****System.out.println("going to clear unknown");
+							break;
+						}
+						else{
+							adjustMapForFastestPath();
+							return 1;
+						}
 
 					} else if (DoInitialExplorationResult == -1) {
 						System.out.println("Reset ordered by robot!");

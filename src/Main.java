@@ -59,7 +59,7 @@ public class Main {
 		Map map = new Map();
 		
 		//////////////////////IMPORTANT VARIABLE///////////////////////////////////////////////////////////////////////
-		boolean simulator = true;
+		boolean simulator = false;
 		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////
 		
 		if(simulator) {
@@ -323,7 +323,7 @@ public class Main {
 						//send the packet to say that exploration is done
 						System.out.println("ending Exploration...");
 						//PathDrawer.removePath();
-						theRobot.sendMapDescriptor();
+						//theRobot.sendMapDescriptor();
 						end = Instant.now();
 						System.out.println("Time: " + Duration.between(starts, end));
 
