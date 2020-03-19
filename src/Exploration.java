@@ -71,6 +71,8 @@ public class Exploration {
 	//true when the robot is currently on its way to an unexplored area
 	boolean goingToBlock;
 
+	boolean hasUnexplored=false;
+
 	//the values of the offset for the block
 	Stack<int[]> storedOffsetValues;
 
@@ -748,7 +750,7 @@ public class Exploration {
 					if(robot.x == startX && robot.y == startY)
 					{
 						System.out.println("robot.x == startX && robot.y == startY");
-						//PathDrawer.removePath();
+						if(hasUnexplored)PathDrawer.removePath();
 						adjustMapForFastestPath();
 						return true;
 					}
@@ -776,6 +778,7 @@ public class Exploration {
 				}
 				else
 				{
+					hasUnexplored = true;
 					System.out.print("update map nodes for A star\n");
 					//update map nodes for A star
 					map.updateMap();
