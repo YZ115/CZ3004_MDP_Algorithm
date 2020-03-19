@@ -21,7 +21,7 @@ public class Exploration {
 	}
 	ExplorationState state;
 	////////////////////////////////////////import variable!!!////////////////////////////////////////////
-	boolean exploreUnexplored = true;
+	boolean exploreUnexplored = false;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -954,6 +954,8 @@ public class Exploration {
 						else{
 							System.out.println("\n\n\n\n\nNOT!!! doing explore Unexplored\n\n\n\n\n");
 							adjustMapForFastestPath();
+							map.updateMap();
+							viz.repaint();
 							return 1;
 						}
 
