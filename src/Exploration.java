@@ -906,6 +906,8 @@ public class Exploration {
 						else{
 							System.out.println("NOT!!! doing explore Unexplored\n\n\n\n\n");
 							adjustMapForFastestPath();
+							//map.updateMap();
+							viz.repaint();
 							return 1;
 						}
 
