@@ -329,12 +329,12 @@ public class PacketFactory implements Runnable{
 //					System.out.println("Sending "+  toSend + "...");
 				}
 			sc.sendPacket(toSend);
-				try {
+				/*try {
 					Thread.sleep(850);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				
 	
 			count = 1;
@@ -351,12 +351,12 @@ public class PacketFactory implements Runnable{
 				toSend = Packet.TURNLEFTCMD + Packet.Splitter +  0 + "$";
 					System.out.println("Sending "+  toSend + "...");
 				}
-				try {
+				/*try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				sc.sendPacket(toSend);
 				break;
 			}
