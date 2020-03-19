@@ -21,7 +21,7 @@ public class Exploration {
 	}
 	ExplorationState state;
 	////////////////////////////////////////import variable!!!////////////////////////////////////////////
-	boolean exploreUnexplored = false;
+	boolean exploreUnexplored = true;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -78,6 +78,7 @@ public class Exploration {
 
 	//the values of the offset for the block
 	Stack<int[]> storedOffsetValues;
+	Stack<int[]> surroundOffset;
 
 	//number of steps per second(user selected)
 	float stepsPerSecond;
@@ -135,12 +136,15 @@ public class Exploration {
 		storedOffsetValues = new Stack<int[]>();
 		initStoredOffsetValues();
 
+		surroundOffset = new Stack<int[]>();
+		initSurroundOffset();
+
 
 		goingToBlock = false;
 
 		//variables to control the flow of exploration, mainly for checklist
 
-		stepsPerSecond = 50f;
+		stepsPerSecond = 30f;
 
 
 		//% of map explored before stopping
@@ -154,6 +158,18 @@ public class Exploration {
 		timeSinceLastUpdate = 0;
 		timeSinceStart = 0;
 		timeLastupdate = System.currentTimeMillis();
+	}
+	public void initSurroundOffset(){
+		int[] offset;
+		offset = new int[] {0,1};
+		surroundOffset.push(offset);
+		offset = new int[] {1,0};
+		surroundOffset.push(offset);
+		offset = new int[] {0,-1};
+		surroundOffset.push(offset);
+		offset = new int[] {-1,0};
+		surroundOffset.push(offset);
+
 	}
 	public void initStoredOffsetValues()
 	{
@@ -225,7 +241,7 @@ public class Exploration {
 		storedOffsetValues.push(offset);
 
 		//down side
-		offset = new int[] {-1,3};
+		/*offset = new int[] {-1,3};
 		storedOffsetValues.push(offset);
 		offset = new int[] {0,3};
 		storedOffsetValues.push(offset);
@@ -254,7 +270,7 @@ public class Exploration {
 		offset = new int[] {-3,0};
 		storedOffsetValues.push(offset);
 		offset = new int[] {-3,1};
-		storedOffsetValues.push(offset);
+		storedOffsetValues.push(offset);*/
 	}
 	public void initStartPoint(int x, int y)
 	{
@@ -286,7 +302,6 @@ public class Exploration {
 				return new int[] {x, y, x + storedOffsetValues.get(i)[0], y + + storedOffsetValues.get(i)[1]};
 			}
 		}
-
 		//if a path was found, return the path
 		//if(mostEfficientPath != null)
 		//	return mostEfficientPath;
@@ -295,6 +310,12 @@ public class Exploration {
 		//return {-1,-1} to singify an error
 		//if {-1,-1} is returned, it means that the block cannot be explored at first, need to explore other path first
 		return new int[] {-1,-1,-1,-1};
+	}
+	boolean checkSurroundObstacle(int x, int y){
+		for(int i = 0;i < surroundOffset.size();i++){
+			if(!robot.checkObstacle(x + surroundOffset.get(i)[0], y + surroundOffset.get(i)[1])) return false;
+		}
+		return true;
 	}
 	boolean ismapCoordinateInStack(int[] mapCoordinate)
 	{
@@ -313,6 +334,32 @@ public class Exploration {
 		}
 		return false;
 	}
+
+	void finalCheckUnexplored(){
+		int[][] mapArray = map.getMapArray();
+
+		boolean surroundByObstacle;
+		for(int y = 0; y < Map.HEIGHT; y++)
+		{
+			for (int x = 0; x < Map.WIDTH; x++)
+			{
+				if(mapArray[y][x] == ExplorationTypes.toInt("UNEXPLORED_EMPTY") || mapArray[y][x] == ExplorationTypes.toInt("UNEXPLORED_OBSTACLE"))
+				{
+					//need to input an area that the robot has explored and is next to the unexplored area, and that the robot can "fit/go" there
+					surroundByObstacle = checkSurroundObstacle(x,y);
+
+					//if the values are -1, do not push into the stack
+					//or if the values are inside the stack already, dont push too
+					if(surroundByObstacle) {
+						map.MapUpdate(x, y, ExplorationTypes.toInt("OBSTACLE"));
+						map.setMapScore(x, y, 1);
+					}
+				}
+			}
+		}
+		map.updateMap();
+	}
+
 	void inputAllUnexploredAreas()
 	{
 		//get the map array to work on
@@ -876,9 +923,10 @@ public class Exploration {
 					int DoInitialExplorationResult = DoInitialExploration();
 					if(DoInitialExplorationResult == 1)
 					{
+						finalCheckUnexplored();
 						robot.sendMapDescriptor();
 						if(exploreUnexplored) {
-							System.out.println("Doing explore Unexplored\n\n\n\n\n");
+							System.out.println("\n\n\n\n\nDoing explore Unexplored\n\n\n\n\n");
 							state = ExplorationState.CLEARING_UNKNOWN;
 
 							//create a int array stack to input coordinates
@@ -904,7 +952,7 @@ public class Exploration {
 							break;
 						}
 						else{
-							System.out.println("NOT!!! doing explore Unexplored\n\n\n\n\n");
+							System.out.println("\n\n\n\n\nNOT!!! doing explore Unexplored\n\n\n\n\n");
 							adjustMapForFastestPath();
 							return 1;
 						}
@@ -924,7 +972,7 @@ public class Exploration {
 				case CLEARING_UNKNOWN:
 					//System.out.println("doing clear unknown");
 					//once it finishes clearing the map and returning to the start point, function will return true
-					stepsPerSecond = 2f;
+					stepsPerSecond = 10f;
 					if(DoClearingUnknown()) {
 						//robot.sendMapDescriptor();
 //						return true;
