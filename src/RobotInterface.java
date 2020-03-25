@@ -46,6 +46,7 @@ public abstract class RobotInterface {
 	public abstract void sendMapDescriptor();
 	public abstract void sideOnly_Calibrate();
 	public abstract boolean doStepFastestPath();
+	public abstract void setSpeed(float stepsPerSecond);
 	//set the fastest path for the robot to follow
 	public void setFastestInstruction(Stack<Node> fast, int targetX, int targetY)
 	{

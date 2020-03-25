@@ -1,3 +1,4 @@
+import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.LinkedList;
@@ -65,26 +66,26 @@ public class Main {
 		if(simulator) {
 			int[][] test= new int[][]
 					{
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-							{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-							{0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-							{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+							{0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+							{0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 					};
 					MapIterator.printExploredResultsToFile(test, "C://Users//PIZZA 3.0//Desktop//test.txt");
 					MapIterator.ArraytoHex((test));
@@ -117,6 +118,7 @@ public class Main {
 
 			viz.setRobot(theRobot);
 			theRobot.setViz(viz);
+			theRobot.setSpeed(10f);
 
 			if(theOS == OperatingSystem.Windows)
 			{
@@ -188,6 +190,7 @@ public class Main {
 					System.out.println("5) Stop Instruction");
 					System.out.println("6) Reset Instruction");
 					System.out.println("7) Get Map Descriptor");
+					System.out.println("8) Set speed for fastest path, default = 10f");
 					int scanType = sc.nextInt();
 					
 //					sc.close();
@@ -234,6 +237,11 @@ public class Main {
 					}
 					else if (scanType == 7)
 						theRobot.sendMapDescriptor();
+					else if (scanType == 8) {
+						System.out.println("Please input intended speed for fastest path\n(1000/stepsPerSecond): ");
+						float stepsPerSecond = sc.nextInt();
+						theRobot.setSpeed(stepsPerSecond);
+					}
 					break;
 				}
 				else{
@@ -433,8 +441,11 @@ public class Main {
 					waypoint = map.getNodeXY(wayx, wayy);
 					Astar as31 = new Astar(map.getNodeXY(theRobot.x, theRobot.y),waypoint);
 					Astar as2 = new Astar(waypoint, map.getNodeXY(13, 1));
+					PathDrawer.update(theRobot.x, theRobot.y, as31.getFastestPath());
 					theRobot.getFastestInstruction(as31.getFastestPath());
-					theRobot.getFastestInstruction(as2.getFastestPath());					
+					PathDrawer.update(theRobot.x, theRobot.y, as2.getFastestPath());
+					theRobot.getFastestInstruction(as2.getFastestPath());
+					PathDrawer.removePath();
 					//send it to the robot to handle the instruction
 					currentState = State.SENDINGMAPDESCRIPTOR;
 					System.out.print("finished fastest path TO GOAL");

@@ -38,6 +38,7 @@ public class Astar {
 
     public Stack<Node> findPath(Node startNode, Node goalNode) {
         int size = 3;
+        boolean isStartNode = true;
 
         PriorityList openList = new PriorityList();
         LinkedList closedList = new LinkedList();
@@ -49,6 +50,8 @@ public class Astar {
 
         while (!openList.isEmpty()) {
             Node node = (Node)openList.removeFirst();
+            if(node==startNode) isStartNode =true;
+            else isStartNode = false;
 
             ((Node)node).setFacing();
             if(node == goalNode){
@@ -61,7 +64,8 @@ public class Astar {
                 boolean isClosed = closedList.contains(neighborNode);
                 boolean isObstacle = (neighborNode).isObstacle();
                 int clearance = neighborNode.getClearance();
-                float costFromStart = node.getCost(neighborNode,goalNode) + 1;
+                float costFromStart = node.getCost(neighborNode,goalNode,isStartNode) + 1;
+                System.out.println("costFromStart: "+costFromStart);
                 //check if the neighbors has not been traversed OR
                 //if a shorter path to the neighbor node is found
                 if ((!isOpen && !isClosed) || costFromStart < neighborNode.costFromStart) {

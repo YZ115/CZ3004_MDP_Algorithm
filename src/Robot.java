@@ -18,6 +18,7 @@ public class Robot extends RobotInterface {
 	int frontCalibrateCount = 0;
 	int sideCalibrateNum = 3;
 	int FrontCalibrateNum = 3;
+	float stepsPerSecond = 1f;
 	boolean frontCalibrated = false;
 	boolean sideCalibrated = false;
 //	ArrayList<Node> TraverseNodes = new ArrayList();
@@ -55,6 +56,9 @@ public class Robot extends RobotInterface {
 		Sen = new Sensor[0];
 	}
 
+	public void setSpeed(float stepsPerSecond){
+		this.stepsPerSecond = stepsPerSecond;
+	}
 
 	public void moveRobot(){
 		//System.out.print("moving forward\n");
@@ -207,7 +211,7 @@ public class Robot extends RobotInterface {
   	  while(!fast.isEmpty()) {
   	 	  Node two = (Node) fast.pop();
   		try {
-			Thread.sleep(100);
+			Thread.sleep((long) (1000/stepsPerSecond));
 		 
 			//System.out.println("Y" + two.getY());
   		  if(two.getX() > x) {

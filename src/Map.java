@@ -162,11 +162,6 @@ public void updateMap() {
 	initializeNodes();
 	initializeNeighbors();
 	calculateClearance();
-	for (int r = 0; r < HEIGHT; r++) {
-		for (int c = 0; c < WIDTH; c++) {
-			System.out.println("X = "+r+" Y = "+c+" isObstacle(): "+NodeArray[r][c].isObstacle());
-		}
-	}
 }
 public boolean isObstacle(int x, int y)
 {
@@ -197,7 +192,6 @@ public void initializeNodes() {
     for (int r = 0; r < HEIGHT; r++) {
         for (int c = 0; c < WIDTH; c++) {
        	 NodeArray[r][c] = new Node(c, r);
-       	 System.out.println("X value: "+r+" Y value: "+"c"+" mapArray[r][c]: "+mapArray[r][c]);
        	 if(mapArray[r][c] != 0) {
        		NodeArray[r][c].setObstacle(true);
        	 }

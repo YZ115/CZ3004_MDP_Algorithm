@@ -15,6 +15,7 @@ public class RealRobot extends RobotInterface {
 	int frontCalibrateCount = 0;
 	int sideCalibrateNum = 3;
 	int FrontCalibrateNum =3;
+	float stepsPerSecond = 10f;
 	boolean sideCalibrated = false;
 	boolean frontCalibrated = false;
 /*	boolean hitWallFront=false;
@@ -46,6 +47,9 @@ public class RealRobot extends RobotInterface {
 		{1, 1, 1, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}
 	};
 
+	public void setSpeed(float stepsPerSecond){
+		this.stepsPerSecond = stepsPerSecond;
+	}
 
 	public RealRobot(int x, int y, Direction facing, Map map, PacketFactory pf){
 		//starting postiion
@@ -433,7 +437,6 @@ public class RealRobot extends RobotInterface {
 			return false;    		
 		}
 		while(!fast.isEmpty()) {
-
 			Node two = (Node) fast.pop();
 			counttocalibrate++;
 			System.out.println("Y" + two.getY());

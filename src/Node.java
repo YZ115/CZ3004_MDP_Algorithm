@@ -86,8 +86,8 @@ public class Node implements Comparable{
         return down;
     }
 
-    public float getCost(Node node, Node goalNode) {
-        return this.costFromStart + getWeight(node);
+    public float getCost(Node node, Node goalNode, boolean isStartNode) {
+        return this.costFromStart + getWeight(node,isStartNode);
     }
 
     public float getEstimatedCost(Node node) {
@@ -111,19 +111,19 @@ public class Node implements Comparable{
         return node.y > this.y ? 1 : node.y < this.y ? -1 : 0;
     }
 
-    public float getWeight(Node anode) {
+    public float getWeight(Node anode, boolean isStartNode) {
         Node node = (Node)anode;
         setFacing();
 
-        if(compareX(node) == 1 && facing == Facing.RIGHT ||
+        if((compareX(node) == 1 && facing == Facing.RIGHT ||
                 compareX(node) == -1 && facing == Facing.LEFT ||
                 compareY(node) == 1 && facing == Facing.UP ||
-                compareY(node) == -1 && facing == Facing.DOWN) {
-            return 0;
+                compareY(node) == -1 && facing == Facing.DOWN)&&!isStartNode) {
+            return 100;
         }
 
         //Penalize turns by adding edge cost
-        return 10000;
+        return 1000;
     }
     
     public void setFacing(Facing face) {
