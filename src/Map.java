@@ -138,6 +138,8 @@ public void updateMapWithScore()
 				mapArray[y][x] = ExplorationTypes.toInt("OBSTACLE");
 			else if(mapScoreArray[y][x] < 0)
 				mapArray[y][x] = ExplorationTypes.toInt("EMPTY");
+			if(mapScoreArray[y][x] == -1)
+				mapArray[y][x] = ExplorationTypes.toInt("UNEXPLORED_EMPTY");
      }
    }
 	
@@ -160,6 +162,11 @@ public void updateMap() {
 	initializeNodes();
 	initializeNeighbors();
 	calculateClearance();
+	for (int r = 0; r < HEIGHT; r++) {
+		for (int c = 0; c < WIDTH; c++) {
+			System.out.println("X = "+r+" Y = "+c+" isObstacle(): "+NodeArray[r][c].isObstacle());
+		}
+	}
 }
 public boolean isObstacle(int x, int y)
 {
@@ -190,6 +197,7 @@ public void initializeNodes() {
     for (int r = 0; r < HEIGHT; r++) {
         for (int c = 0; c < WIDTH; c++) {
        	 NodeArray[r][c] = new Node(c, r);
+       	 System.out.println("X value: "+r+" Y value: "+"c"+" mapArray[r][c]: "+mapArray[r][c]);
        	 if(mapArray[r][c] != 0) {
        		NodeArray[r][c].setObstacle(true);
        	 }
@@ -197,6 +205,7 @@ public void initializeNodes() {
        		NodeArray[r][c].setObstacle(false);
         }
     }
+    System.out.println();
 }
 
 public void initializeNeighbors() {
@@ -369,7 +378,8 @@ public void paintMap(Graphics g){
             	g.setColor(Color.GREEN);
                 g.fillRect(10+distanceX, 10+distanceY, sizeofsquare, sizeofsquare);
             }
-            else if(mapArray[i][j]==ExplorationTypes.toInt("UNEXPLORED_EMPTY") || mapArray[i][j]==ExplorationTypes.toInt("UNEXPLORED_OBSTACLE")){
+            else if((mapArray[i][j]==ExplorationTypes.toInt("UNEXPLORED_EMPTY") || mapArray[i][j]==ExplorationTypes.toInt("UNEXPLORED_OBSTACLE"))&&
+			mapScoreArray[i][j]!=-1){
               g.setColor(Color.LIGHT_GRAY);
               g.fillRect(10+distanceX, 10+distanceY, sizeofsquare, sizeofsquare);
             }
