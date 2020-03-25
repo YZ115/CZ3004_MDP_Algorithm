@@ -21,7 +21,7 @@ public class Exploration {
 	}
 	ExplorationState state;
 	////////////////////////////////////////import variable!!!////////////////////////////////////////////
-	boolean exploreUnexplored = false;
+	boolean exploreUnexplored = true;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -81,6 +81,7 @@ public class Exploration {
 
 	//number of steps per second(user selected)
 	float stepsPerSecond;
+	boolean goingBackToStart = false;
 
 	//the %that map has to be explored before to terminate
 	float percentageToStop;
@@ -753,7 +754,7 @@ public class Exploration {
 					if(robot.x == startX && robot.y == startY)
 					{
 						System.out.println("robot.x == startX && robot.y == startY");
-						if(hasUnexplored)PathDrawer.removePath();
+						if(goingBackToStart)PathDrawer.removePath();
 						adjustMapForFastestPath();
 						return true;
 					}
@@ -762,6 +763,7 @@ public class Exploration {
 					{
 						System.out.print("checking if map got properly explored aka 90% of map");
 						inputAllUnexploredAreas();
+						goingBackToStart = false;
 					}
 					else
 					{
@@ -775,6 +777,7 @@ public class Exploration {
 
 						//updates the pathdrawer for graphics
 						PathDrawer.update(robot.x, robot.y, pathToNextUnexploredArea.getFastestPath());
+						goingBackToStart = true;
 
 						goingToBlock = true;
 					}
@@ -838,6 +841,7 @@ public class Exploration {
 						PathDrawer.update(robot.x, robot.y, pathToNextUnexploredArea.getFastestPath());
 					}
 					goingToBlock = true;
+					goingBackToStart = false;
 				}
 			}
 			return false;

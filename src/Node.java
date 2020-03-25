@@ -123,7 +123,7 @@ public class Node implements Comparable{
         }
 
         //Penalize turns by adding edge cost
-        return 1000;
+        return 1500;
     }
     
     public void setFacing(Facing face) {
