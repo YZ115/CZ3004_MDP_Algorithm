@@ -141,6 +141,7 @@ public class MapIterator {
                 
             //convert the string of 1s and 0s to hex, then write it to the filename provided
             mapDescriptorP1Hex = formatStringToHexadecimal(mapDescriptorP1Hex);
+            System.out.println(mapDescriptorP1Hex);
             bw.write(mapDescriptorP1Hex);
         }
         catch (IOException e) {
@@ -263,6 +264,7 @@ public class MapIterator {
                  
           //convert the string of 1s and 0s to hex, then write it to the filename provided
             mapDescriptorP2Hex = formatStringToHexadecimal(mapDescriptorP2Hex);
+            System.out.println(mapDescriptorP2Hex);
             bw.write(mapDescriptorP2Hex);
         }
         catch (IOException e) {

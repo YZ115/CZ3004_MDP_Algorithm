@@ -21,7 +21,7 @@ public class Exploration {
 	}
 	ExplorationState state;
 	////////////////////////////////////////import variable!!!////////////////////////////////////////////
-	boolean exploreUnexplored = true;
+	boolean exploreUnexplored = false;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -141,7 +141,7 @@ public class Exploration {
 
 		//variables to control the flow of exploration, mainly for checklist
 
-		stepsPerSecond = 50f;
+		stepsPerSecond = 20f;
 
 
 		//% of map explored before stopping
@@ -1023,6 +1023,21 @@ public class Exploration {
 
 		//update the score map
 		map.updateMapWithScore();
+		for(int i=0;i<map.mapArray.length;i++){
+			for(int j=0;j<map.mapArray[i].length;j++){
+				System.out.print(map.mapArray[i][j]);
+			}
+			System.out.println();
+		}
+		map.setMapEqMap();
+		map.optimiseFP();
+		System.out.println();
+		for(int i=0;i<map.mapArray2.length;i++){
+			for(int j=0;j<map.mapArray2[i].length;j++){
+				System.out.print(map.mapArray2[i][j]);
+			}
+			System.out.println();
+		}
 	}
 
 }

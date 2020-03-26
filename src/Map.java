@@ -10,6 +10,7 @@ public class Map{
 	int[][] SimulatedmapArray;
 	int[][] mapArray;
 	int[][] mapScoreArray;
+	int[][] mapArray2;
 
 	boolean turnoffgrid=false;
 	boolean turnoffgrid2=false;
@@ -45,8 +46,29 @@ public class Map{
 		{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
 		{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
 		{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
-		
 	};
+ 	this.mapArray2 = new int[][]{
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+ 	};
 	setScoreArray();
  }
 
@@ -102,6 +124,7 @@ public class Map{
 
 public void setMapArray(int[][] mapArray) {
 	this.mapArray = mapArray;
+	//this.mapArray2 = mapArray;
 	//SimulatedmapArray = mapArray.clone();
 	initializeNodes();
 	initializeNeighbors();
@@ -132,19 +155,48 @@ public void updateMapWithScore()
 	
 	for(int y = 0 ; y < mapScoreArray.length; y++){
 		for(int x = 0; x < mapScoreArray[y].length;x++){
-			if(mapScoreArray[y][x] == 0)
+			if(mapScoreArray[y][x] == 0) {
 				mapArray[y][x] = ExplorationTypes.toInt("UNEXPLORED_EMPTY");
-			else if(mapScoreArray[y][x] > 0)
+				//mapArray2[y][x] = ExplorationTypes.toInt("UNEXPLORED_EMPTY");
+			}
+			else if(mapScoreArray[y][x] > 0) {
 				mapArray[y][x] = ExplorationTypes.toInt("OBSTACLE");
-			else if(mapScoreArray[y][x] < 0)
+				//mapArray2[y][x] = ExplorationTypes.toInt("OBSTACLE");
+			}
+			else if(mapScoreArray[y][x] < 0) {
 				mapArray[y][x] = ExplorationTypes.toInt("EMPTY");
-			if(mapScoreArray[y][x] == -1)
-				mapArray[y][x] = ExplorationTypes.toInt("UNEXPLORED_EMPTY");
+				//mapArray2[y][x] = ExplorationTypes.toInt("EMPTY");
+			}
+			////////////////////////////////////////////////////////////////////might need changing/////////////////////////////////////////////////////////
+			/*if(mapScoreArray[y][x] == -1) {
+				//mapArray[y][x] = ExplorationTypes.toInt("UNEXPLORED_EMPTY");
+				mapArray2[y][x] = ExplorationTypes.toInt("UNEXPLORED_EMPTY");
+			}*/
      }
    }
 	
-	
 }
+
+public void optimiseFP(){
+	for(int i=0;i<mapArray.length;i++){
+		for(int j=0;j<mapArray[i].length;j++){
+			if(mapScoreArray[i][j]==-1)
+				mapArray2[i][j] = ExplorationTypes.toInt("UNEXPLORED_EMPTY");
+		}
+	}
+}
+
+public void setMapEqMap(){
+ 	System.out.println();
+ 	for(int i=0;i<mapArray2.length;i++){
+ 		for(int j=0;j<mapArray2[i].length;j++){
+ 			mapArray2[i][j]=mapArray[i][j];
+ 			System.out.print(mapArray2[i][j]);
+		}
+ 		System.out.println();
+	}
+}
+
 public void TEMPupdatescore2(int[][] theMap)
 {
 	for(int y = 0 ; y < mapScoreArray.length; y++){
@@ -191,13 +243,12 @@ public Node getNodeXY(int x , int y) {
 public void initializeNodes() {
     for (int r = 0; r < HEIGHT; r++) {
         for (int c = 0; c < WIDTH; c++) {
-       	 NodeArray[r][c] = new Node(c, r);
-       	 if(mapArray[r][c] != 0) {
-       		NodeArray[r][c].setObstacle(true);
-       	 }
-       	 else // if(mapArray[r][c] == 0)
-       		NodeArray[r][c].setObstacle(false);
-        }
+			NodeArray[r][c] = new Node(c, r);
+			if (mapArray2[r][c] != 0) {
+				NodeArray[r][c].setObstacle(true);
+			} else // if(mapArray[r][c] == 0)
+				NodeArray[r][c].setObstacle(false);
+		}
     }
     System.out.println();
 }
@@ -372,8 +423,7 @@ public void paintMap(Graphics g){
             	g.setColor(Color.GREEN);
                 g.fillRect(10+distanceX, 10+distanceY, sizeofsquare, sizeofsquare);
             }
-            else if((mapArray[i][j]==ExplorationTypes.toInt("UNEXPLORED_EMPTY") || mapArray[i][j]==ExplorationTypes.toInt("UNEXPLORED_OBSTACLE"))&&
-			mapScoreArray[i][j]!=-1){
+            else if(mapArray[i][j]==ExplorationTypes.toInt("UNEXPLORED_EMPTY")){
               g.setColor(Color.LIGHT_GRAY);
               g.fillRect(10+distanceX, 10+distanceY, sizeofsquare, sizeofsquare);
             }

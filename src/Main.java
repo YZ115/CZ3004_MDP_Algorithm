@@ -60,32 +60,33 @@ public class Main {
 		Map map = new Map();
 		
 		//////////////////////IMPORTANT VARIABLE///////////////////////////////////////////////////////////////////////
-		boolean simulator = true;
+		boolean simulator = false;
 		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////
-		
+		boolean changeToObstacles = true;
+		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////
 		if(simulator) {
 			int[][] test= new int[][]
 					{
-							{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+							{0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-							{0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-							{0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+							{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 					};
 					MapIterator.printExploredResultsToFile(test, "C://Users//PIZZA 3.0//Desktop//test.txt");
 					MapIterator.ArraytoHex((test));
@@ -110,7 +111,7 @@ public class Main {
 			Sensor s3 = new Sensor(3,SensorLocation.FACING_DOWN, 1, 0, theRobot.x, theRobot.y);
 			Sensor s4 = new Sensor(3,SensorLocation.FACING_RIGHT, 1, -1, theRobot.x, theRobot.y);
 			Sensor s5 = new Sensor(3,SensorLocation.FACING_DOWN, -1, 0, theRobot.x, theRobot.y);
-			Sensor s6 = new Sensor(6,SensorLocation.FACING_TOP, 1, -1, theRobot.x, theRobot.y);
+			Sensor s6 = new Sensor(8,SensorLocation.FACING_TOP, 1, -1, theRobot.x, theRobot.y);
 
 
 			Sensor[] Sensors = {s1,s2,s3,s4,s5,s6};
@@ -441,12 +442,21 @@ public class Main {
 					waypoint = map.getNodeXY(wayx, wayy);
 					Astar as31 = new Astar(map.getNodeXY(theRobot.x, theRobot.y),waypoint);
 					Astar as2 = new Astar(waypoint, map.getNodeXY(13, 1));
-					PathDrawer.update(theRobot.x, theRobot.y, as31.getFastestPath());
-					theRobot.getFastestInstruction(as31.getFastestPath());
-					PathDrawer.update(theRobot.x, theRobot.y, as2.getFastestPath());
-					theRobot.getFastestInstruction(as2.getFastestPath());
-					PathDrawer.removePath();
-					//send it to the robot to handle the instruction
+					Stack<Node> as31GFP = as31.getFastestPath();
+					if(as31GFP.isEmpty()){
+						Astar as4 = new Astar(map.getNodeXY(theRobot.x, theRobot.y),map.getNodeXY(13,1));
+						PathDrawer.update(theRobot.x, theRobot.y, as4.getFastestPath());
+						theRobot.getFastestInstruction(as4.getFastestPath());
+						PathDrawer.removePath();
+					}
+					else {
+						PathDrawer.update(theRobot.x, theRobot.y, as31GFP);
+						theRobot.getFastestInstruction(as31.getFastestPath());
+						PathDrawer.update(theRobot.x, theRobot.y, as2.getFastestPath());
+						theRobot.getFastestInstruction(as2.getFastestPath());
+						PathDrawer.removePath();
+						//send it to the robot to handle the instruction
+					}
 					currentState = State.SENDINGMAPDESCRIPTOR;
 					System.out.print("finished fastest path TO GOAL");
 					
