@@ -60,18 +60,18 @@ public class Main {
 		Map map = new Map();
 		
 		//////////////////////IMPORTANT VARIABLE///////////////////////////////////////////////////////////////////////
-		boolean simulator = false;
+		boolean simulator = true;
 		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////
-		boolean changeToObstacles = true;
-		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////
+/*		boolean changeToObstacles = true;
+		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////*/
 		if(simulator) {
 			int[][] test= new int[][]
 					{
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-							{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -111,7 +111,7 @@ public class Main {
 			Sensor s3 = new Sensor(3,SensorLocation.FACING_DOWN, 1, 0, theRobot.x, theRobot.y);
 			Sensor s4 = new Sensor(3,SensorLocation.FACING_RIGHT, 1, -1, theRobot.x, theRobot.y);
 			Sensor s5 = new Sensor(3,SensorLocation.FACING_DOWN, -1, 0, theRobot.x, theRobot.y);
-			Sensor s6 = new Sensor(8,SensorLocation.FACING_TOP, 1, -1, theRobot.x, theRobot.y);
+			Sensor s6 = new Sensor(5,SensorLocation.FACING_TOP, 1, -1, theRobot.x, theRobot.y);
 
 
 			Sensor[] Sensors = {s1,s2,s3,s4,s5,s6};

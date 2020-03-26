@@ -141,7 +141,7 @@ public class Exploration {
 
 		//variables to control the flow of exploration, mainly for checklist
 
-		stepsPerSecond = 20f;
+		stepsPerSecond = 30f;
 
 
 		//% of map explored before stopping

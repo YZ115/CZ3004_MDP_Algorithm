@@ -244,7 +244,7 @@ public void initializeNodes() {
     for (int r = 0; r < HEIGHT; r++) {
         for (int c = 0; c < WIDTH; c++) {
 			NodeArray[r][c] = new Node(c, r);
-			if (mapArray2[r][c] != 0) {
+			if (mapArray[r][c] != 0) {
 				NodeArray[r][c].setObstacle(true);
 			} else // if(mapArray[r][c] == 0)
 				NodeArray[r][c].setObstacle(false);
