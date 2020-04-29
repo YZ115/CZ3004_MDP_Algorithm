@@ -132,8 +132,8 @@ public class RealSensor extends Sensor{
 				}
 
 			}
-			//can move up. why check again?? alamak waste time
-			//NOTE to change . optimize. but dont touch now cause dont want fuck it up tmr
+			
+			//NOTE to change . optimize
 /////////////////// need change
 			if((mapConfirmed[nextLocationY][nextLocationX] != 1)) {
 //			if not immutabled block, set empty
