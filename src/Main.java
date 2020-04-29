@@ -341,7 +341,7 @@ public class Main {
 						pf.sc.sendPacket(Packet.StartExplorationTypeFin + "$");
 
 						// CASE SENDINGMAPDESCRIPTOR - START
-						System.out.println("------------------------------Sending this useless descriptor------------------------------\n");
+						System.out.println("------------------------------Sending map descriptor descriptor------------------------------\n");
 						System.out.println("doing map descriptor");
 						MapIterator.printExploredResultsToFile(map.getMapArray(), "theExplored.txt");
 						MapIterator.printExploredResultsToHex("ExplorationHex.txt");
@@ -518,7 +518,7 @@ public class Main {
 				break;
 
 			case SENDINGMAPDESCRIPTOR:
-				System.out.println("------------------------------Sending this useless descriptor------------------------------\n");
+				System.out.println("------------------------------Sending map descriptor------------------------------\n");
 				System.out.println("doing map descriptor");
 
 
