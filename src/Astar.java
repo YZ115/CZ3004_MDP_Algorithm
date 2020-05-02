@@ -25,7 +25,7 @@ public class Astar {
             addLast(object);
         }
     }
-
+    //return a stack of nodes from a designated goal node
     protected Stack<Node> constructPath(Node node) {
         Stack path = new Stack();
         while (node.pathParent != null) {
@@ -35,7 +35,7 @@ public class Astar {
         }
         return path;
     }
-
+    //Find fastest path from designated start node to goal node
     public Stack<Node> findPath(Node startNode, Node goalNode) {
         int size = 3;
         boolean isStartNode = true;
@@ -66,18 +66,12 @@ public class Astar {
                 int clearance = neighborNode.getClearance();
                 float costFromStart = node.getCost(neighborNode,goalNode,isStartNode) + 1;
                 System.out.println("costFromStart: "+costFromStart);
-                //check if the neighbors has not been traversed OR
-                //if a shorter path to the neighbor node is found
+                //check if the neighbors has not been traversed or if there is a shorter path to the neighbour node
                 if ((!isOpen && !isClosed) || costFromStart < neighborNode.costFromStart) {
                     neighborNode.pathParent = node;
                     neighborNode.costFromStart = costFromStart;
                     neighborNode.estimatedCostToGoal = neighborNode.getEstimatedCost(goalNode);
-
-//                    Node testNode = neighborNode;
-//                    while (testNode.pathParent!= null) {
-//                        //System.out.println("X: " + ((Node)testNode.pathParent).getX() + "\nY: " + ((Node)testNode.pathParent).getY());
-//                        testNode = testNode.pathParent;
-//                    }
+                    //if neighbour node is not in openList or closedList and robot can reach, add neighbour node to openList.
                     if (!isOpen && !isObstacle && size == clearance) {
                         openList.add(neighborNode);
                     }

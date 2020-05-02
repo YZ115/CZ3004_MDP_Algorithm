@@ -151,10 +151,6 @@ public class Node implements Comparable{
         }
     }
 
-    public Facing getFacing() {
-        return this.facing;
-    }
-
     public void setObstacle(boolean val) {
         this.isObstacle = val;
     }
@@ -175,38 +171,6 @@ public class Node implements Comparable{
 
     public int getClearance() {
         return clearance;
-    }
-
-
-    // public Node returnRightNeighbors(){
-    //     Node neighbor;
-    //     List<Node> neighbors = this.getNeighbors();
-    //
-    //     if (this.x > 0 )
-    // }
-
-    public Node getNode(Direction direction) {
-        if (direction == Direction.UP && up != null)
-            return up;
-        else if (direction == Direction.DOWN && down != null)
-            return down;
-        else if (direction == Direction.LEFT & left != null)
-            return left;
-        else if (direction == Direction.RIGHT && right !=null)
-            return right;
-        return null;
-    }
-
-    public Node getNode(Facing face) {
-        if (face == Facing.UP && up != null)
-            return up;
-        else if (face == Facing.DOWN && down != null)
-            return down;
-        else if (face == Facing.LEFT & left != null)
-            return left;
-        else if (face == Facing.RIGHT && right !=null)
-            return right;
-        return null;
     }
 
 }

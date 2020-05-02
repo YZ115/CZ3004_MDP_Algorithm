@@ -1,13 +1,4 @@
-import javax.swing.*;
-import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
-import java.util.Queue;
 
 
 public class Robot extends RobotInterface {
@@ -298,58 +289,6 @@ public class Robot extends RobotInterface {
     	}
     	return false;
     }
-    
-    /*public void sendWholeMap(Map mapP) {
-		FileWriter fw = null;
-		BufferedWriter bw = null;
-		String filename = "test_1.txt";
-		try {
-			fw = new FileWriter(filename);
-	        bw = new BufferedWriter(fw);
-	        //bw.write(formatStringToHexadecimal(results));
-	        StringBuilder sb = new StringBuilder();
-			 //transpose the array...
-			int[][] map = mapP.getMapArray();
-			String mapCmd = "B:Map:Set" + "[";
-			sb.append(mapCmd);
-			int[][] newMapArray = new int[Map.WIDTH][Map.HEIGHT];
-			for(int i = 0 ; i < Map.HEIGHT; i++) {
-				for(int j = 0; j < Map.WIDTH; j++) {
-					 newMapArray[j][i] = map[i][j] ;
-				}
-			}
-			for(int i = 0 ; i < Map.WIDTH; i++) {
-			  mapCmd += Arrays.toString(newMapArray[i]);
-			  sb.append(mapCmd);
-			  if(i != Map.WIDTH-1) {
-				  mapCmd += ",";
-				  sb.append(mapCmd);
-			  }
-			  
-			}
-			mapCmd += "]$";
-			System.out.print(mapCmd);
-			sb.append(mapCmd);
-			bw.write(sb.toString());
-			//sc.sendPacket(mapCmd);
-			//transpose finished
-			
-			//send array to android. 
-		}catch (IOException e) {
-            System.out.println("Not possible to write!");
-        }
-
-        finally {
-            try {
-                if (bw != null)
-                    bw.close();
-                if (fw != null)
-                    fw.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-	}*/
 
 	@Override
 	public void addSensors(RealSensor[] sensors) {
@@ -375,20 +314,9 @@ public class Robot extends RobotInterface {
 		
 	}
 
-
-
-
-
 	@Override
 	public void sendMapDescriptor() {
 		//sendWholeMap(map);
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void sideOnly_Calibrate() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -414,9 +342,4 @@ public class Robot extends RobotInterface {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-
-
 }

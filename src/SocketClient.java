@@ -53,7 +53,7 @@ public class SocketClient{
 	}
 
 
-
+	//sends packet data to rpi to be relayed or processed
 	public int sendPacket(String packetData){
 		try {
 			System.out.println("Sending packetData...");

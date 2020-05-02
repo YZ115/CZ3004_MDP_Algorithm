@@ -44,7 +44,6 @@ public abstract class RobotInterface {
 	public abstract void front_Calibrate();
 	public abstract void initial_Calibrate();
 	public abstract void sendMapDescriptor();
-	public abstract void sideOnly_Calibrate();
 	public abstract boolean doStepFastestPath();
 	public abstract void setSpeed(float stepsPerSecond);
 	//set the fastest path for the robot to follow
@@ -62,30 +61,6 @@ public abstract class RobotInterface {
 			//if the stack is empty, means the nodes have fully been converted
 			//next step will be to TURN towards the correct direction
 			if(fast.empty())break;
-	    	/*if(fast.empty())
-	    	{
-	    		//check if the robot will be facing the direction of the block to "explore" it
-	    		//if not then add turn instructions
-
-	    		//that means the grid is on the right
-	    		if(targetX > tempX+1)
-	    			tempFacing = getShortestTurnInstruction(tempFacing, Direction.RIGHT);
-	    		
-	    		//means the grid on the left
-	    		else if(targetX < tempX-1)
-	    			tempFacing = getShortestTurnInstruction(tempFacing, Direction.LEFT);
-	    		
-	    		//grid is on the top(up)
-	    		else if(targetY < tempY-1)
-	    			tempFacing = getShortestTurnInstruction(tempFacing, Direction.UP);
-	    		
-	    		else if(targetY > tempY+1)
-	    			tempFacing = getShortestTurnInstruction(tempFacing, Direction.DOWN);
-	    		
-
-	    		break;
-	    	}*/
-	    	//if not empty then convert the nodes to instructions
 	    	else
 	    	{
 		    	next = (Node) fast.pop();
@@ -430,12 +405,7 @@ public abstract class RobotInterface {
 		return canMove;
 	}
 	public boolean isBlocked(int xi, int yi){
-
-
-
-		//return 1 if obstacle.
-		//return 0 if no obstacle
-		//return -1 if out of bound
+		//return 1 if obstacle, 0 if no obstacle, -1 if out of bound
 		boolean rflag= false, tflag= false, bflag= false, lflag = false,obflag = false;
 		lflag = checkLeftBound(xi, yi);
 		tflag = checkTopBound(xi, yi);

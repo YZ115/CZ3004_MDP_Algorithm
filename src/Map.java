@@ -145,14 +145,10 @@ public void setMapScore(int x, int y, int score)
 
 
 }
+
+//update probabilities on map display for simulation and real robot.
 public void updateMapWithScore()
 {
-	
-	
-	/*if(turnoffgrid)mapScoreArray[1][3] = 1;
-	if(turnoffgrid2)mapScoreArray[3][3] = 2;
-	if(turnoffgrid3)mapScoreArray[3][2] = 2;*/
-	
 	for(int y = 0 ; y < mapScoreArray.length; y++){
 		for(int x = 0; x < mapScoreArray[y].length;x++){
 			if(mapScoreArray[y][x] == 0) {
@@ -197,46 +193,13 @@ public void setMapEqMap(){
 	}
 }
 
-public void TEMPupdatescore2(int[][] theMap)
-{
-	for(int y = 0 ; y < mapScoreArray.length; y++){
-		for(int x = 0; x < mapScoreArray[y].length;x++){
-			if(theMap[y][x] == ExplorationTypes.toInt("UNEXPLORED_EMPTY"))
-				mapScoreArray[y][x] = -50;
-			else if(theMap[y][x] == ExplorationTypes.toInt("UNEXPLORED_OBSTACLE"))
-				mapScoreArray[y][x] = 50;
-     }
-   }
-	
-	updateMapWithScore();
-}
 public void updateMap() {
 	initializeNodes();
 	initializeNeighbors();
 	calculateClearance();
 }
-public boolean isObstacle(int x, int y)
-{
-	//returns true if its a wall or its out of bounds
-	if(x > WIDTH -1 || y > HEIGHT -1 || x < 0 || y < 0)
-		return true;
 
-	if(mapArray[y][x] == ExplorationTypes.toInt("UNEXPLORED_OBSTACLE") ||
-		mapArray[y][x] == ExplorationTypes.toInt("OBSTACLE"))
-		return true;
-	else return false;
-}
-public void setExplored(int x, int y)
-{
-	if(mapArray[y][x] == ExplorationTypes.toInt("UNEXPLORED_EMPTY")) {
-		mapArray[y][x] = ExplorationTypes.toInt("EMPTY");
-	}
-	else if(mapArray[y][x] == ExplorationTypes.toInt("UNEXPLORED_OBSTACLE")) {
-		mapArray[y][x] = ExplorationTypes.toInt("OBSTACLE");
-	}
-}
-
-public Node getNodeXY(int x , int y) {
+	public Node getNodeXY(int x , int y) {
 	return NodeArray[y][x];
 }
 
@@ -282,16 +245,8 @@ public void initializeNeighbors() {
     }
 }
 
-public void printClearence() {
-	for (int i = 0; i < NodeArray.length; i++) {
-		for (int j = 0; j < NodeArray[i].length; j++) {
-			System.out.println(NodeArray[i][j].isObstacle);
-		}
-	}
-}
 
-
-public void calculateClearance() {
+	public void calculateClearance() {
     Node node;
     for (int r = 0; r < HEIGHT; r++) {
         columnloop:

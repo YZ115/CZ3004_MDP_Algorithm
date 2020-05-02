@@ -100,51 +100,6 @@ public class RealSensor extends Sensor{
 			map.updateMapWithScore();
 		
 			return hitWallret;
-			
-			
-			
-			
-			
-			
-			//if(nextLocationX < 0 || nextLocationY < 0 || nextLocationX >= Map.WIDTH || nextLocationY >= Map.HEIGHT)
-			//	return;
-//			if(map.mapArray[nextLocationY][nextLocationX] == ExplorationTypes.toInt("OBSTACLE") )
-//				return;
-			
-//			if(flag && mapConfirmed[nextLocationY][nextLocationX] > 3) {
-//				//remove anything behind a block
-//				map.MapUpdate(nextLocationX, nextLocationY, ExplorationTypes.toInt("UNEXPLORED_EMPTY"));
-//				continue;
-//			}
-			
-			//set empty block
-			/*if(i == 1 ) {
-				if(data == 1) {
-					map.MapUpdate(nextLocationX, nextLocationY, ExplorationTypes.toInt("OBSTACLE"));
-				}else
-					map.MapUpdate(nextLocationX, nextLocationY, ExplorationTypes.toInt("EMPTY"));
-				if((mapConfirmed[nextLocationY][nextLocationX] != 1)) {
-					map.MapUpdate(nextLocationX, nextLocationY, ExplorationTypes.toInt("OBSTACLE"));
-					//set obstacle
-					mapConfirmed[nextLocationY][nextLocationX] = data;
-					flag = true;
-					return;
-				}
-
-			}
-			//can move up. why check again?? alamak waste time
-			//NOTE to change . optimize. but dont touch now cause dont want fuck it up tmr
-/////////////////// need change
-			if((mapConfirmed[nextLocationY][nextLocationX] != 1)) {
-//			if not immutabled block, set empty
-				map.MapUpdate(nextLocationX, nextLocationY, ExplorationTypes.toInt("EMPTY"));
-				continue;
-			}
-			if(map.mapArray[nextLocationY][nextLocationX] == 1)
-				flag = true;
-*/
-			//if the next location is not equal to an obstacle then sense, else no
-
 	}
 
 	public boolean SenseRight(Map map, int data, int[][] mapConfirmed) {

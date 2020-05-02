@@ -36,6 +36,7 @@ public class Main {
 
 
 	public static void main(String[] args){
+		//instantiate objects and variables
 		String OS = System.getProperty("os.name").toLowerCase();
 
 		OperatingSystem theOS = OperatingSystem.Windows;
@@ -61,9 +62,8 @@ public class Main {
 		
 		//////////////////////IMPORTANT VARIABLE///////////////////////////////////////////////////////////////////////
 		boolean simulator = true;
-		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////
-/*		boolean changeToObstacles = true;
-		//////////////////////IMPORTANT VARIABLE//////////////////////////////////////////////////////////////////////*/
+		//////////////////////IMPORTANT VARIABLE///////////////////////////////////////////////////////////////////////
+
 		if(simulator) {
 			int[][] test= new int[][]
 					{
@@ -88,6 +88,7 @@ public class Main {
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
 							{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 					};
+					//for debugging purposes
 					MapIterator.printExploredResultsToFile(test, "C://Users//PIZZA 3.0//Desktop//test.txt");
 					MapIterator.ArraytoHex((test));
 			map.setMapArray(test);
@@ -104,7 +105,6 @@ public class Main {
 		if(simulator) {
 			//the class and initialisation for the simulated robot
 			theRobot = new Robot(1,18, Direction.RIGHT, map);
-			//***Potentially need to change
 			//3 front, 2 right, 1(Long range) left
 			Sensor s1 = new Sensor(3,SensorLocation.FACING_RIGHT, 1, 1, theRobot.x, theRobot.y);
 			Sensor s2 = new Sensor(3,SensorLocation.FACING_RIGHT, 1, 0, theRobot.x, theRobot.y);
@@ -131,16 +131,11 @@ public class Main {
 		}
 		else
 		{
+			//initialize real robot, communications, and sensors
 			recvPackets = new LinkedList<Packet>();
 			pf = new PacketFactory(recvPackets);
 			theRobot = new RealRobot(1,18, Direction.RIGHT, map, pf);
 
-			//Sensor s1 = new Sensor(4,SensorLocation.FACING_RIGHT, 1, 1, theRobot.x, theRobot.y);
-			//Sensor s2 = new Sensor(4,SensorLocation.FACING_RIGHT, 1, 0, theRobot.x, theRobot.y);
-			//Sensor s3 = new Sensor(4,SensorLocation.FACING_DOWN, 1, 0, theRobot.x, theRobot.y);
-			//Sensor s4 = new Sensor(4,SensorLocation.FACING_RIGHT, 1, -1, theRobot.x, theRobot.y);
-			//Sensor s5 = new Sensor(4,SensorLocation.FACING_DOWN, -1, 0, theRobot.x, theRobot.y);
-			//Sensor s6 = new Sensor(5,SensorLocation.FACING_TOP, 0, 0, theRobot.x, theRobot.y);
 			RealSensor s1 = new RealSensor(4,SensorLocation.FACING_RIGHT, 1, 1, theRobot.x, theRobot.y);
 			RealSensor s2 = new RealSensor(4,SensorLocation.FACING_RIGHT, 1, 0, theRobot.x, theRobot.y);
 			RealSensor s3 = new RealSensor(4,SensorLocation.FACING_DOWN, 1, 1, theRobot.x, theRobot.y);
@@ -169,9 +164,6 @@ public class Main {
 		//init the algo classes
 		Exploration exe = new Exploration(null, simulator, theRobot, viz, map);
 		exe.initStartPoint(1,18);
-
-		//System.out.print("printing string");
-		//System.out.print(iterator.formatStringToHexadecimal("000000000000000000000000000000000000010000000000000000000000000000000001110010000000000000000000000000000000000000000000000001110000000000000000000000000000000010000000000000000000000000000000000111111000000000000000000001110000000000000000000000000000000000000010000000000000000000000000000000000000"));
 		while(currentState != State.DONE)
 		{
 			switch(currentState){
@@ -181,6 +173,7 @@ public class Main {
 
 			case WAITINGFORCOMMAND:
 				System.out.println("\n------------------------------WaitingForCommand Case------------------------------\n");
+				//terminal UI for simulator
 				if(simulator) {
 					Scanner sc = new Scanner(System.in);
 					System.out.println("Please enter state:");
@@ -246,6 +239,7 @@ public class Main {
 					break;
 				}
 				else{
+					//real robot begin listening to commands from rpi
 					System.out.print("\nListening\n");
 					//pf.sc.sendPacket("Donald Trump!");
 					pf.listen();
@@ -340,7 +334,7 @@ public class Main {
 
 						pf.sc.sendPacket(Packet.StartExplorationTypeFin + "$");
 
-						// CASE SENDINGMAPDESCRIPTOR - START
+						// Send map descriptor
 						System.out.println("------------------------------Sending this useless descriptor------------------------------\n");
 						System.out.println("doing map descriptor");
 						MapIterator.printExploredResultsToFile(map.getMapArray(), "theExplored.txt");
@@ -351,7 +345,6 @@ public class Main {
 						pf.sendCMD("B:stat:Obstacle mdf:" + MapIterator.mapDescriptorP2Hex + "$");
 						pf.sendCMD("B:stat:finish_exe_mdf$");
 						currentState = State.WAITINGFORCOMMAND;
-						// CASE SENDINGMAPDESCRIPTOR - END
 
 						try {
 							Thread.sleep(10000);
@@ -433,6 +426,7 @@ public class Main {
 
 				break;
 			case FASTESTPATH:
+				//init fastest path from startNode to goalNode
 				System.out.println("-------------------------------------FastestPath case-----------------------------------\n");
 				if(simulator)
 				{
@@ -540,39 +534,4 @@ public class Main {
 
 
 	SocketClient cs = new SocketClient("192.168.4.4", 8081);
-
-
-
-
-
-
-	//test of iterator
-//			static int[][] test= new int[][]
-//			{
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-//		{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-//			};
-//			MapIterator.printExploredResultsToFile(test, "C:\Users\PIZZA 3.0\Desktop\test.txt");
-//			MapIterator.ArraytoHex((test));
-
-
-
 }

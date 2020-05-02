@@ -21,7 +21,7 @@ public class Exploration {
 	}
 	ExplorationState state;
 	////////////////////////////////////////import variable!!!////////////////////////////////////////////
-	boolean exploreUnexplored = false;
+	boolean exploreUnexplored = true;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -724,6 +724,8 @@ public class Exploration {
 //			return false;
 		return 0;
 	}
+
+	//optimized to reduce the number of turns the robot takes during clearing unknown.
 	public boolean DoClearingUnknown()
 	{
 		System.out.println("doing clear unknown");
@@ -876,7 +878,7 @@ public class Exploration {
 				case INITIAL_EXPLORATION:
 
 
-					//once it reaches the start point, function will return true and go on to next state
+					//once it reaches the start point, DoInitialExploration() will return 1.
 					int DoInitialExplorationResult = DoInitialExploration();
 					if(DoInitialExplorationResult == 1)
 					{
@@ -884,27 +886,7 @@ public class Exploration {
 						if(exploreUnexplored) {
 							System.out.println("Doing explore Unexplored\n\n\n\n\n");
 							state = ExplorationState.CLEARING_UNKNOWN;
-
-							//create a int array stack to input coordinates
-							//Nobody knows what's going on but everybody hope it works!
-							//Oh Krishna, Allah, Jesus please help us!!!!
 							inputAllUnexploredAreas();
-
-/*						if(unexploredAreas.size()!=0){
-							robot.side_Calibrate();
-							robot.front_Calibrate();
-						}*/
-							//if(unexploredAreas.size()<10) return 1;
-
-
-							//remove blocks when there are more than 30 blocks and change all unexplored areas to explored
-							//adjustMapForFastestPath();
-
-							//return true to skip clearing unknown
-//						return true;
-							//-----return 1;
-
-							//*****System.out.println("going to clear unknown");
 							break;
 						}
 						else{
@@ -920,28 +902,18 @@ public class Exploration {
 						return -1;
 					}
 
-					//draw the fastest path back home at any time
 					map.updateMap();
-					//calculate the fastest path back home
-					//Astar pathToStart = new Astar(map.getNodeXY(robot.x, robot.y), map.getNodeXY(startX,startY));
-					//PathDrawer.update(robot.x, robot.y, pathToStart.getFastestPath());
 					break;
 
 				case CLEARING_UNKNOWN:
 					//System.out.println("doing clear unknown");
 					//once it finishes clearing the map and returning to the start point, function will return true
+					//stepsPerSecond set to 2f for debugging purposes
 					stepsPerSecond = 2f;
 					if(DoClearingUnknown()) {
-						//robot.sendMapDescriptor();
-//						return true;
 						return 1;
 					}
-
-					//draw the fastest path back home at any time
 					map.updateMap();
-					//calculate the fastest path back home
-					//PathDrawer.update(robot.x, robot.y, pathToNextUnexploredArea.getFastestPath());
-					//pathToNextUnexploredArea = null;
 					PathDrawer.updateUnexploredAreas(unexploredAreas);
 
 				break;

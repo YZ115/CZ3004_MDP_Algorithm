@@ -181,24 +181,6 @@ public class MapIterator {
             System.out.print("MapDescriptorP1.length: "+mapDescriptorP1.length); //20
             System.out.print("mapDescriptorP1[0].length: "+mapDescriptorP1[0].length); //15
             System.out.println("\n");
-            /*for (int i=0;i<mapDescriptorP1.length;i++) {
-            	for (int j=0;j<mapDescriptorP1[0].length;j++)
-            		if(mapDescriptorP1[i][j] == 1)
-                    {
-                    	if(results[i][j] == ExplorationTypes.toInt("EMPTY"))
-                    	{
-                    		sb.append(0);
-                    		hexSB.append(0);
-                    	}
-	                	else if(results[i][j] == ExplorationTypes.toInt("OBSTACLE"))
-	                	{
-	                		sb.append(1);
-	                		hexSB.append(1);
-	                	}
-                    }
-            	sb.append(System.getProperty("line.separator"));
-            	//System.out.println("\n");
-            }*/
             
             
             for (int w = mapDescriptorP1.length-1; w >= 0 ; w--) {
@@ -207,12 +189,6 @@ public class MapIterator {
                 	//if its explored, then input the information for it
                     if(mapDescriptorP1[w][h] == 1)
                     {
-                    	/*if(w==mapDescriptorP1.length-1 && h==0) {
-                    		sb.append(0);
-                    		sb.append(0);
-                    		hexSB.append(0);
-                    		hexSB.append(0);
-                    	}*/
                     	if(results[w][h] == ExplorationTypes.toInt("EMPTY"))
                     	{
                     		sb.append(0);

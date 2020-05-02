@@ -93,13 +93,6 @@ public class PacketFactory implements Runnable{
 
 	public void processPacket(String packetString) {
 		String[] splitPacket = packetString.split(Packet.Splitter);
-/*		if (splitPacket[0].equalsIgnoreCase(Packet.Cmd))
-		{
-			if(splitPacket[1].equalsIgnoreCase(Packet.PhotoPacket)){
-				//send command to rpi to take photo
-				System.out.println("Sending take photo command and x, y");
-				buffer.add(new Packet(Packet.takePhoto));
-			}*/
 			if(splitPacket[1].equalsIgnoreCase(Packet.StartExplorationType)) {
 				//start exploration
 				//when exploration end and reach the start position
@@ -148,7 +141,7 @@ public class PacketFactory implements Runnable{
 				//set robot direction and x and y
 //				this is a problem now. does not handle the robot Position
 //				String directionTemp = splitPacket[3];//set direction for robot
-//				
+//
 //				String[] waypointcoord  = splitPacket[2].replace("[", "").split(",");
 //				int x = Integer.parseInt(waypointcoord[0]);
 //				int y = Integer.parseInt(waypointcoord[1]);
@@ -161,7 +154,7 @@ public class PacketFactory implements Runnable{
 				String[] waypointcoord  = splitPacket[2].replace("[", "").replace("]", "").split(",");
 				int x = Integer.parseInt(waypointcoord[0]);
 				int y = Integer.parseInt(waypointcoord[1]);
-				//set robot position waypoint for the fastest path. after setting this, we shall send all instruction to raspberry and not do anything.
+				//set robot position waypoint for the fastest path. after setting this, we will send all instruction to raspberry and not do anything.
 				//allow faster execution when android sends the command to start fastest path.
 				//must edit set robot position.
 				buffer.add(new Packet(Packet.SetWayPointi, x, y));
@@ -198,7 +191,6 @@ public class PacketFactory implements Runnable{
 			buffer.add(new Packet(Packet.StopInstruction));
 		}
 		else if(commandSplit[1].equalsIgnoreCase(Packet.Reset)) {
-			//needs to multithread this too
 			//stop whatever is going on
 			//carry robot back to starting point.
 			//reset map
@@ -213,14 +205,7 @@ public class PacketFactory implements Runnable{
 	 
 	}
 
-	public int recvSensor(String commandRecv) {
 
-		return 0;
-
-
-	}
-	
-	
 	public boolean getFlag() {
 		return explorationflag;
 	}
@@ -240,18 +225,9 @@ public class PacketFactory implements Runnable{
 		setPreviousPacket(Packet.SIDETURNCALIBRATE);
 	}
 
-	
+	//for debugging purposes only
 	public void sideCalibrate(int x, int y, int directionNum) {
-		//we need a return packet after calibration?
 		System.out.println("debug side calibrate");
-//		if (isFacingWall(x, y, directionNum)) {
-//			if(camRun) sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$");
-//			else sc.sendPacket(Packet.SIDECALIBRATE);
-//		}
-//		else {
-//			if(camRun) sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
-//			else sc.sendPacket(Packet.SIDECALIBRATE);
-//		}
 		sc.sendPacket(Packet.SIDECALIBRATE + "$");
 //		sc.sendPacket(Packet.SIDECALIBRATE + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$");
 /*		try {
@@ -264,6 +240,7 @@ public class PacketFactory implements Runnable{
 		setPreviousPacket(Packet.SIDECALIBRATE);
 	}
 
+	//for debugging purposes only
 	public void frontCalibrate(int x, int y, int directionNum) {
 		System.out.println("debug front calibrate");
 //		if (isFacingWall(x, y, directionNum)) {
@@ -279,6 +256,7 @@ public class PacketFactory implements Runnable{
 		setPreviousPacket(Packet.FRONTCALIBRATE);
 	}
 
+	//for debugging purposes only
 	public void leftCalibrate(int x, int y, int directionNum) {
 		System.out.println("debug left calibrate");
 //		if (isFacingWall(x, y, directionNum)) {
@@ -476,18 +454,11 @@ public class PacketFactory implements Runnable{
 
 			System.out.println("Sending a Reverse Packet");
 		}
-/*		else if (instruction == PHOTOi){
-			instructionString = Packet.REVERSECMD + Packet.Splitter + "1"+ "$";
-		}*/
 		else {
 			System.out.println("Error: Wrong format");
 			return false;
 		}
 
-//		if (isFacingWall(x, y, directionNum))
-//			instructionString = instructionString + Packet.Splitter + "1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + Packet.Splitter + "-1" + "$";
-//		else
-//			instructionString = instructionString + Packet.Splitter + "1" + Packet.Splitter + x + Packet.Splitter + y + Packet.Splitter + directionNum + "$";
 		instructionString = instructionString + Packet.Splitter + "1" + "$";
 		sc.sendPacket(instructionString);
 
@@ -502,24 +473,4 @@ public class PacketFactory implements Runnable{
 	public void sendCMD(String cmd) {
 		sc.sendPacket(cmd);
 	}
-
-//	public boolean sendPhotoDataToRpi (int x, int y, int directionNum){
-//		String instructionString = Packet.RPI+Packet.Splitter+Packet.PhotoPacket+Packet.Splitter+x+Packet.Splitter+y+Packet.Splitter+directionNum+"$";
-//		sc.sendPacket(instructionString);
-//		return true;
-//	}
-
-	public void waitForAck() {
-		System.out.println("+++++++++++++++++++++++++++++++++++++++Waiting for Acknowledgement++++++++++++++++++++++++++++++++++++++++++\n");
-		String ackrecv = "test";
-		while(!ackrecv.equalsIgnoreCase(Packet.ACKKNOWLEDGE)) {
-			ackrecv = sc.receivePacket(false, null);			
-		}
-		//NOPE WAIT AND THROW.
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
 }

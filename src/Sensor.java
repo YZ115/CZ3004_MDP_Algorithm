@@ -250,23 +250,12 @@ public class Sensor{
 				hitWall = true;
 				System.out.print(" X = " + x + " Y + " + y + " score \n");
 			}
-			
-			//map.setExplored(x,y);
 			map.setMapScore(x,y,score);
 		}
 		else
 			hitWall=true;
 		
 		return hitWall;
-	}
-
-	
-	public void printGrid(int[][] mapArray) {
-		for(int i = 0 ; i < HEIGHT;i++) {
-			for(int j = 0; j < WIDTH; j++) {
-				System.out.print(mapArray[i][j]);
-			}
-		}
 	}
 
 

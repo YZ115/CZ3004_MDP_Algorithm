@@ -133,15 +133,6 @@ public class RealRobot extends RobotInterface {
 						if(count % 4 == 0) {
 						sendMapDescriptor();	
 						}
-			//pf.createOneMovementPacketToArduino(Packet.FORWARDi);
-//			System.out.println(facing);
-//			pf.sendPhotoDataToRpi(x,y,directionNum);
-//			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
-/*			try {
-				Thread.sleep((int) (delay));
-			}catch (Exception e){
-				System.out.println("You ran into an error you idiot. Get a life.");
-			}*/
 			pf.createOneMovementPacketToArduino(Packet.FORWARDi, x, y, getDirectionNum());
 			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
@@ -169,33 +160,6 @@ public class RealRobot extends RobotInterface {
 			x += movementDistance;
 
 		if(stepByStep) {
-
-
-			//pf.createOneMovementPacketToArduino(Packet.REVERSEi);
-//			System.out.println(facing);
-//			switch(facing){
-//				case UP:
-//					directionNum = 0;
-//					break;
-//				case RIGHT:
-//					directionNum = 1;
-//					break;
-//				case DOWN:
-//					directionNum = 2;
-//					break;
-//				case LEFT:
-//					directionNum = 3;
-//					break;
-//				default:
-//					break;
-//			}
-//			pf.sendPhotoDataToRpi(x,y,directionNum);
-//			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
-/*			try {
-				Thread.sleep((int) (delay));
-			}catch (Exception e){
-				System.out.println("You ran into an error you idiot. Get a life.");
-			}*/
 			pf.createOneMovementPacketToArduino(Packet.REVERSEi, x, y, getDirectionNum());
 			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update the location for the robot in the sensors
@@ -214,8 +178,6 @@ public class RealRobot extends RobotInterface {
 	}
 
 	public void LookAtSurroundings() {
-		boolean sensePlaceHolder;
-		boolean sensePlaceHolder1;
 		Packet pck = null;
 		System.out.println("Waiting for Sensor Packets");
 		while(pck == null || pck.type != Packet.setObstacle) {
@@ -249,28 +211,6 @@ public class RealRobot extends RobotInterface {
 //			System.out.println("Sensor: "+(i+1)+"\tRange: "+Sen[i].range);
 			Sen[i].Sense(map, data[i],mapConfirmed);
 		}
-			// sensePlaceHolder1 = Sen[i].SenseRight(map, data[i], mapConfirmed);
-			// if((i<=1||i==3) && sensePlaceHolder){
-			// 	countF++;
-			// 	if(countF == 3)hitWallFront=true;
-			// }
-		// 		//System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$hit wall front$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");}
-		// 	else if((i==2||i==4) && sensePlaceHolder1){
-		// 		countR++;
-		// 		if(countR == 2)hitWallRight=true;
-		// 	}
-		// 		//System.out.println("::::::::::::::::::::::::::::::::::::hit wall right:::::::::::::::::::::::::::::::::::::::\n");}
-		// }
-		// if(hitWallFront && hitWallRight){
-		// 	System.out.println("Sending calibration command to arduino.\n");
-		// 	front_Calibrate();
-		// 	side_Calibrate();
-		// 	hitWallFront=false;
-		// 	hitWallRight=false;
-		// }
-		/*for(int i=0;i < Sen.length; i++) {
-			Sen[i].Sense(map, data[i],mapConfirmed);// for now
-		}*/
 		viz.repaint();
 
 	}
@@ -304,36 +244,6 @@ public class RealRobot extends RobotInterface {
 			Sen[i].ChangeDirectionRight();
 		}
 		if(stepByStep) {
-			//pf.createOneMovementPacketToArduino(Packet.TURNRIGHTi);
-//			System.out.println(facing);
-//			switch(facing){
-//				case UP:
-//					directionNum = 0;
-//					break;
-//				case RIGHT:
-//					directionNum = 1;
-//					break;
-//				case DOWN:
-//					directionNum = 2;
-//					break;
-//				case LEFT:
-//					directionNum = 3;
-//					break;
-//				default:
-//					break;
-//			}
-//			try {
-//				Thread.sleep((int) (delay));
-//			}catch (Exception e){
-//				System.out.println("You ran into an error you idiot. Get a life.");
-//			}
-//			pf.sendPhotoDataToRpi(x,y,directionNum);
-//			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
-//			try {
-//				Thread.sleep((int) (delay));
-//			}catch (Exception e){
-//				System.out.println("You ran into an error you idiot. Get a life.");
-//			}
 			pf.createOneMovementPacketToArduino(Packet.TURNRIGHTi, x, y, getDirectionNum());
 			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
 			//update location for the robot in the sensors
@@ -371,39 +281,6 @@ public class RealRobot extends RobotInterface {
 			Sen[i].ChangeDirectionLeft();
 		}
 		if(stepByStep) {
-
-		//	pf.createOneMovementPacketToArduino(Packet.TURNLEFTi);
-//			System.out.println(facing);
-//			switch(facing){
-//				case UP:
-//					directionNum = 0;
-//					break;
-//				case RIGHT:
-//					directionNum = 1;
-//					break;
-//				case DOWN:
-//					directionNum = 2;
-//					break;
-//				case LEFT:
-//					directionNum = 3;
-//					break;
-//				default:
-//					break;
-//			}
-//			try {
-//				Thread.sleep((int) (delay));
-//			}catch (Exception e){
-//				System.out.println("You ran into an error you idiot. Get a life.");
-//			}
-//			pf.sendPhotoDataToRpi(x,y,directionNum);
-//			System.out.println("R:cam:"+x+":"+y+":"+directionNum);
-			//sc.sendPacket("R:"+"cam:"+x+":"+y+":"+directionNum);
-//			System.out.println("\"R:\"+\"cam:\"+x+\":\"+y+\":\"+directionNum");
-//			try {
-//				Thread.sleep((int) (delay));
-//			}catch (Exception e){
-//				System.out.println("You ran into an error you idiot. Get a life.");
-//			}
 			pf.createOneMovementPacketToArduino(Packet.TURNLEFTi, x, y, getDirectionNum());
 			//update the location for the robot in the sensors
 			updateSensor();
@@ -535,12 +412,6 @@ public class RealRobot extends RobotInterface {
 
 			moveRobot();
 			instruction.add(Packet.FORWARDi);
-//			if(counttocalibrate >= numberofPacketCalibrate &&fastestcalibrate) {
-//				if(calibrateWallFastestPath()) {
-//					instruction.add(Packet.CALIBRATEi);
-//					counttocalibrate = 0;
-//				}
-//			}
 
 		}
 		stepByStep = true;
@@ -676,10 +547,6 @@ public class RealRobot extends RobotInterface {
 		return false;
 	}
 
-
-
-	public void sideOnly_Calibrate() {
-	}
 
 	@Override
 	public void addSensors(Sensor[] sensors) {
